@@ -1,30 +1,58 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import './styles/App.scss';
-// import Layout from './components/layout/Layout'
 import Login from './components/LoginPage'
 import ForgetPaaword from './components/ForgetPaaword'
 import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import useAuth from './components/useAuth'
 import ProtectedRoute from './components/ProtectedRoute'
+import Dashboard from './components/Dashboard';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 function App() {
   const { isAuthenticated, handleLogin, handleLogout, handleReset } = useAuth();
+  const [userDetails, setUserDetails] = useState({})
+  const [open, setOpen] = useState(false);
+
+  const openSnackbar = async (userDetail) => {
+    await setUserDetails(userDetail)
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+    setUserDetails({})
+  };
+
 
   return (
     <Router>
       <Switch>
         <Redirect path="/" exact to="home" />
-        <ProtectedRoute exact path="/home" isAuthenticated={isAuthenticated} />
+        <ProtectedRoute exact path="/home" component={Dashboard} isAuthenticated={isAuthenticated} />
 
         <Route exact path="/login"
           component={(props) => <Login isAuthenticated={isAuthenticated}
-            handleLogin={handleLogin} {...props} />} />
+            handleLogin={handleLogin} openSnackbar={openSnackbar} {...props} />} />
 
         <Route exact path="/forgetpassword"
           component={(props) => <ForgetPaaword isAuthenticated={isAuthenticated}
-          handleReset={handleReset} {...props} />} />
-
+            handleReset={handleReset} {...props} />} />
       </Switch>
+     { console.log(open)}
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+        <Alert onClose={handleClose} severity="success">
+          {userDetails?.message}
+        </Alert>
+      </Snackbar>
+
     </Router>
   );
 }

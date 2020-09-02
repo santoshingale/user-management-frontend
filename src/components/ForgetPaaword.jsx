@@ -26,11 +26,6 @@ const ForgetPaaword = ({ handleReset, isAuthenticated }) => {
             setError(true)
     }
 
-    const loginPage = () => {
-        console.log("hiii here")
-        history.replace(to);
-    }
-
     return (
         <div className="forgetPass">
             <div className="container">
