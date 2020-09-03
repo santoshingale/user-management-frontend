@@ -18,7 +18,7 @@ const ForgetPaaword = ({ handleReset, isAuthenticated }) => {
         if (isAuthenticated) {
             history.replace(from);
         }
-    }, [isAuthenticated]);
+    }, [isAuthenticated,from,history]);
 
     const handleSubmit = () => {
         (email !== "") ?

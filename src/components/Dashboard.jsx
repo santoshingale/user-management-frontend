@@ -1,15 +1,20 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import Header from './Header'
 import Navbar from './Navbar';
 
+
+
 const Dashboard = () => {
-    const[state,setState] = useState(false);
+    const [sidebar, setSidebar] = useState(true);
+
+    const showSidebar = () => setSidebar(!sidebar);
 
     return (
-        <div>
-            <Header/>
-            <Navbar/>
-                    </div>
+        <div className="dashboard">
+            <Header showSidebar={showSidebar} />
+            <Navbar sidebar={sidebar} />
+            
+        </div>
     )
 }
 

@@ -14,7 +14,8 @@ function Alert(props) {
 }
 
 function App() {
-  const { isAuthenticated, handleLogin, handleLogout, handleReset } = useAuth();
+  // const { isAuthenticated, handleLogin, handleLogout, handleReset } = useAuth();
+  const { isAuthenticated, handleLogin, handleReset } = useAuth();
   const [userDetails, setUserDetails] = useState({})
   const [open, setOpen] = useState(false);
 
@@ -27,8 +28,8 @@ function App() {
     if (reason === 'clickaway') {
       return;
     }
-    setOpen(false);
     setUserDetails({})
+    setOpen(false);
   };
 
 
@@ -46,9 +47,8 @@ function App() {
           component={(props) => <ForgetPaaword isAuthenticated={isAuthenticated}
             handleReset={handleReset} {...props} />} />
       </Switch>
-     { console.log(open)}
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
-        <Alert onClose={handleClose} severity="success">
+        <Alert onClose={handleClose} severity={userDetails?.status ===200? "success":"error"}>
           {userDetails?.message}
         </Alert>
       </Snackbar>

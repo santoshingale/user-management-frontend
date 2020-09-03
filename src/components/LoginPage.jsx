@@ -14,12 +14,11 @@ const LoginPage = ({ handleLogin, isAuthenticated, openSnackbar }) => {
         if (isAuthenticated) {
             history.replace(from);
         }
-    }, [isAuthenticated]);
+    }, [isAuthenticated, from, history]);
 
     const [loginDetails, setLoginDetails] = useState({ username: "", password: "", rememberMe: false })
     const [error, setError] = useState(false)
-    const [userDetails, setUserDetails] = useState({});
-    const  handleSubmit = async () => {
+    const handleSubmit = async () => {
         (loginDetails.username !== "" && loginDetails.password !== "") ?
             await openSnackbar(await handleLogin(loginDetails)) :
             setError(true)
