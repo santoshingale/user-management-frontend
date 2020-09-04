@@ -1,9 +1,8 @@
 .sidebar {
   left: -100%;
   position: fixed;
-  display: block;
-  #nav-menu-id,.nav-menu {
-    margin-top: 55px;
+  .nav-menu {
+    padding-top: 55px;
     background-color: #2B333E;
     width: 140px;
     // width: 60px;
@@ -12,7 +11,8 @@
     justify-content: flex-start;
     position: fixed;
     top: 0;
-    
+    box-sizing: border-box;
+
 
     transition: 850ms;
     overflow: hidden;

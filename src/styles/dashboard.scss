@@ -1,6 +1,111 @@
-.dashboard{
-    width: 100vw;
+.dashboard {
+    // width: 100vw;
     height: 100vh;
-    .dashboard-container{
+    padding-top: 55px;
+    display: flex;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    .container-fluid {
+        box-sizing: border-box;
+        padding-left: 0px;
+
+        &.active {
+            padding-left: 240px;
+        }
+
+        &.half-navbar {
+            padding-left: 60px;
+        }
+
+    }
+
+    .background-white {
+        background-color: #fff;
+    }
+
+    .form-control {
+        background-color: #F5F6F9;
+
+    }
+
+    .padding-20px {
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .flex-space-evenly {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+
+    .margin-20px {
+        margin: 30px 0;
+    }
+
+    .margin-20px1 {
+        margin: 30px 0 30px -30px;
+        padding-right: 30px;
+    }
+
+    .react-date-picker {
+        width: 100%;
+        height: 35px;
+        background-color: #F5F6F9;
+        border: slide gray 1px!important;
+        .react-date-picker__clear-button{
+            display: none;
+        }
+    }
+
+    input[type=file] {
+        display: none;
+    }
+
+    .custom-file-upload {
+        color: white;
+        padding: 16px 32px;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+        width: 100%;
+        height: 200px;
+        color: gray;
+        border: solid lightgray 1px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        img{
+            width: 50px;
+            object-fit: contain;
+            color:grey;
+        }
+        p{
+            font-size: 0.75rem;
+        }
+        &:hover {
+            background-size: 30px 30px;
+            background-image: linear-gradient(-45deg, #F6F6F6 25%, transparent 25%, transparent 50%, #F6F6F6 50%, #F6F6F6 75%, transparent 75%, transparent);
+            animation: stripes 10s linear infinite
+        }
+    }
+
+    @keyframes stripes {
+        100% {
+            background-position: 100% 100%;
+        }
+    }
+
+    label {
+        color: gray;
+        font-size: 0.85rem;
+      }
+    .first-div {
+        background-color: white;
+        padding: 25px 25px;
+        border-bottom: 1px solid #e3e3e3;
+        display: flex;
+        align-items: center;
     }
 }

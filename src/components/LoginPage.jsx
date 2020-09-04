@@ -26,7 +26,7 @@ const LoginPage = ({ handleLogin, isAuthenticated, openSnackbar }) => {
 
     return (
         <div className="login">
-            <div className="container">
+            <div className="login-container">
                 <div className="form_container ">
                     <div className="login_form">
                         <div className="mi_image_div">

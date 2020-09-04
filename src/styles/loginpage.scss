@@ -1,11 +1,12 @@
 .login {
     height: 100vh;
     background-color: $homebg;
-
-    .container {
+    margin:auto;
+    .login-container {
         display: flex;
         justify-content: center;
         align-items: center;
+        height: 100vh;
 
         .form_container {
             display: flex;

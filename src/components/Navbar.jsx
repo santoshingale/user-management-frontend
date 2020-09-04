@@ -11,11 +11,9 @@ import { ReactComponent as ArrowsHorizontal } from '../assets/arrows-horizontal.
 import Button from 'react-bootstrap/Button';
 
 
-const Navbar = ({ sidebar }) => {
+const Navbar = ({ sidebar, isNavbarFull,halfNavNab }) => {
 
-  const [isNavbarFull, setIsNavbarFull] = useState(false)
 
-  const halfNavNab = () => setIsNavbarFull(!isNavbarFull);
 
   return (
     <div>
@@ -71,35 +69,6 @@ const Navbar = ({ sidebar }) => {
           </ul>
         </nav>
 
-      </div>
-      <div className="dashboard-container">
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
-        <h1>jdsjdfjd</h1>
       </div>
     </div>
   );

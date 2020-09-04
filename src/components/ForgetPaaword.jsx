@@ -28,7 +28,7 @@ const ForgetPaaword = ({ handleReset, isAuthenticated }) => {
 
     return (
         <div className="forgetPass">
-            <div className="container">
+            <div className="forgetpass-container">
                 <div className="form_container " >
                     <div className="mi_image_div">
                         <img src={mi} alt="" />
