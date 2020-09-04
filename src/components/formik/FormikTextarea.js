@@ -3,7 +3,7 @@ import { useField } from "formik";
 import PropTypes from "prop-types";
 
 
-const FormikTextField = (props) => {
+const FormikTextarea = (props) => {
     const [field, meta] = useField(props.name);
 
     const { value, onChange, onBlur } = field;
@@ -13,7 +13,7 @@ const FormikTextField = (props) => {
 
     return (
         <>
-            <input 
+            <textarea 
                 style={touched && error ? { border: "solid red 1px" } : {}}
                 value={value}
                 onChange={onChange}
@@ -29,8 +29,9 @@ const FormikTextField = (props) => {
         ;
 };
 
-FormikTextField.propTypes = {
+FormikTextarea.propTypes = {
     name: PropTypes.string.isRequired,
 };
 
-export default FormikTextField;
+export default FormikTextarea;
+

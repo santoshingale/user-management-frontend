@@ -15,7 +15,6 @@ const Dashboard = () => {
     return (
         <div className="dashboard">
             <Header showSidebar={showSidebar} />
-            {console.log(isNavbarFull)}
             <Navbar sidebar={sidebar} isNavbarFull={isNavbarFull} halfNavNab={halfNavNab} />
             <div className={!sidebar ? 'container-fluid ' : isNavbarFull ? 'container-fluid active' : 'container-fluid half-navbar'}>
                 <div className="row first-div">
