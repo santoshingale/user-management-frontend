@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Header from './Header'
 import Navbar from './Navbar';
 import NewUser from './NewUser';
-
+import '../styles/navbar.scss'
 const Dashboard = () => {
     const [sidebar, setSidebar] = useState(false);
 
@@ -14,17 +14,21 @@ const Dashboard = () => {
 
     return (
         <div className="dashboard">
-            <Header showSidebar={showSidebar} />
-            <Navbar sidebar={sidebar} isNavbarFull={isNavbarFull} halfNavNab={halfNavNab} />
-            <div className={!sidebar ? 'container-fluid ' : isNavbarFull ? 'container-fluid active' : 'container-fluid half-navbar'}>
-                <div className="row first-div">
-                    <div className="col-md-12">
-                        <h5>New user</h5>
+            <div class="wrapper d-flex align-items-stretch">
+                <Header showSidebar={showSidebar} sidebar={sidebar} />
+
+                <Navbar sidebar={sidebar} isNavbarFull={isNavbarFull} halfNavNab={halfNavNab} />
+
+                <div className="container-fluid">
+                    <div className=" first-div">
+                        <div className="col-md-12">
+                            <h5>New user</h5>
+                        </div>
                     </div>
+
+                    <NewUser />
+
                 </div>
-
-                <NewUser/>
-
             </div>
         </div>
     )

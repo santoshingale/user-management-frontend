@@ -1,29 +1,25 @@
-AddDashboard,
-        DeleteDashboard,
-        ModifyDashboard,
-        ReadDashboard,
+import React, { useState } from 'react'
+import DatePicker from 'react-date-picker';
 
-        AddSettings,
-        DeleteSettings,
-        ModifySettings,
-        ReadSettings,
-        
-        AddUsersInformation,
-        DeleteUsersInformation,
-        ModifyUsersInformation,
-        ReadUsersInformation,
+const Temp = () => {
+    const [state, setState] = useState(new Date())
 
-        AddWebPage1,
-        DeleteWebPage1,
-        ModifyWebPage1,
-        ReadWebPage1,
+    const changeDate = date => {
+        console.log(state)
+        setState(date)
+    }
+    return (
+        <div>
+            <DatePicker
+                
+                value={state}
+                onChange={changeDate}
+            />
+        </div>
+    )
+}
 
-        AddWebPage2,
-        DeleteWebPage2,
-        ModifyWebPage2,
-        ReadWebPage2,
+export default Temp
 
-        AddWebPage2,
-        DeleteWebPage3,
-        ModifyWebPage3,
-        ReadWebPage3,
+
+

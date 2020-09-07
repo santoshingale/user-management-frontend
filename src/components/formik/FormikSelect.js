@@ -10,15 +10,21 @@ const FormikSelect = (props) => {
     const { options, id, selectedValue, ...otherProps } = props;
 
     return (
-            <select
-                className="form-control"
-                onChange={onChange}
-                {...otherProps}
-            >
-                {options.map((option) => (selectedValue === option.value) ?
-                    <option key={option.value} value={option.value}>{option.value}</option> :
-                    <option key={option.value} value={option.value}>{option.value}</option> )}
-            </select>
+        <>
+       <div style={{  padding:'0 10px' }}>
+            <label>{props.label}</label>
+        <select
+            className="form-control"
+            onChange={onChange}
+            {...otherProps}
+            style={{ borderRadius: "1px", height: '35px' }}
+        >
+            {options.map((option) => (selectedValue === option.value) ?
+                <option key={option.value} value={option.value}>{option.value}</option> :
+                <option key={option.value} value={option.value}>{option.value}</option>)}
+        </select>
+        </div>
+        </>
     );
 };
 

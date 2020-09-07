@@ -3,80 +3,66 @@ import DatePicker from 'react-date-picker';
 import UploadImage from '../assets/upload-image.png'
 import { Form, Formik } from "formik";
 import { FormikTextField, FormikTextarea, FormikSelect } from "./formik";
-import { Button } from "@material-ui/core";
-import { formSchema, initialValues } from "./formik/services/loginFormService";
+import { formSchema, initialValues } from "./formik/services/registerFormService";
 import axios from 'axios'
+import Button from 'react-bootstrap/Button';
+import apiService from '../helpers/apiService';
 
 const NewUser = () => {
 
     const [countries, setCountries] = useState([]);
 
     const [permissions, setPermissions] = useState({
-        AddDashboard: false,
-        DeleteDashboard: false,
-        ModifyDashboard: false,
-        ReadDashboard: false,
+        addDashboard: false,
+        deleteDashboard: false,
+        modifyDashboard: false,
+        readDashboard: false,
 
-        AddSettings: false,
-        DeleteSettings: false,
-        ModifySettings: false,
-        ReadSettings: false,
+        addSettings: false,
+        deleteSettings: false,
+        modifySettings: false,
+        readSettings: false,
 
-        AddUsersInformation: false,
-        DeleteUsersInformation: false,
-        ModifyUsersInformation: false,
-        ReadUsersInformation: false,
+        addUsersInformation: false,
+        deleteUsersInformation: false,
+        modifyUsersInformation: false,
+        readUsersInformation: false,
 
-        AddWebPage1: false,
-        DeleteWebPage1: false,
-        ModifyWebPage1: false,
-        ReadWebPage1: false,
+        addWebPage1: false,
+        deleteWebPage1: false,
+        modifyWebPage1: false,
+        readWebPage1: false,
 
-        AddWebPage2: false,
-        DeleteWebPage2: false,
-        ModifyWebPage2: false,
-        ReadWebPage2: false,
+        addWebPage2: false,
+        deleteWebPage2: false,
+        modifyWebPage2: false,
+        readWebPage2: false,
 
-        AddWebPage3: false,
-        DeleteWebPage3: false,
-        ModifyWebPage3: false,
-        ReadWebPage3: false,
-
-
+        addWebPage3: false,
+        deleteWebPage3: false,
+        modifyWebPage3: false,
+        readWebPage3: false,
     })
 
-    // const { AddDashboard, DeleteDashboard, ModifyDashboard, ReadDashboard, AddSettings, DeleteSettings, ModifySettings, ReadSettings,
-    //     AddUsersInformation, DeleteUsersInformation, ModifyUsersInformation, ReadUsersInformation, AddWebPage1, DeleteWebPage1, ModifyWebPage1, ReadWebPage1,
-    //     AddWebPage2, DeleteWebPage2, ModifyWebPage2, ReadWebPage2, AddWebPage3, DeleteWebPage3, ModifyWebPage3, ReadWebPage3, } = permissions;
+    const [selector, setSelector] = useState({ add: false, modify: false, delete: false, read: false })
 
-    const handleChange = async (event) => {
-        await setPermissions({ ...permissions, [event.target.name]: event.target.checked });
+    const handleChange = (event) => {
+        setPermissions({ ...permissions, [event.target.name]: event.target.checked });
     };
 
 
-    // const handleSelectAll = (event) => {
-    //     for (var k in permissions) {
-    //         if (k.includes(event.target.name)) {
-    //             console.log([k])
-    //             setPermissions({ ...permissions, [k]: event.target.checked })
-    //         }
-    //     }
-    // }
-
-    const keys = ["AddDashboard", "DeleteDashboard", "ModifyDashboard", "ReadDashboard", "AddSettings", "DeleteSettings", "ModifySettings", "ReadSettings",
-        "AddUsersInformation", "DeleteUsersInformation", "ModifyUsersInformation", "ReadUsersInformation", "AddWebPage1", "DeleteWebPage1", "ModifyWebPage1", "ReadWebPage1",
-        "AddWebPage2", "DeleteWebPage2", "ModifyWebPage2", "ReadWebPage2", "AddWebPage3", "DeleteWebPage3", "ModifyWebPage3", "ReadWebPage3"]
-
-    const handleSelectAll = (event) => {
-        var k = event.target.name - 1;
-        console.log(k)
-
-        for (k; k < keys.length; k += 4) {
-            console.log(keys[k])
-            setPermissions({ ...permissions, [keys[k]]: true })
+    const handleSelectAll = async (event) => {
+        console.log(event);
+        for (let k in permissions) {
+            const value = event.target.checked
+            console.log(value)
+            if (k.includes(event.target.name)) {
+                let key = k.toString()
+                setPermissions((prevState) => ({ ...prevState, [key]: value }));
+            }
         }
+        setSelector({ ...selector, [event.target.name]: event.target.checked })
     }
-
 
     useEffect(() => {
         axios.get('https://disease.sh/v3/covid-19/countries')
@@ -88,14 +74,41 @@ const NewUser = () => {
             })
     }, [])
 
-    const handlelogin = (props) => {
-        console.log(props)
+    const handleRegister = async (props) => {
+        let payload = { ...props, ...permissions }
+        delete payload.confirmpassword
+        const path = "home/admin";
+        const formData = new FormData();
+        formData.append('profilePic', profilePic);
+        formData.append('register', JSON.stringify(payload))
+        const resp = await apiService.postMultipart(path, formData)
+        console.log(resp)
+
     }
+
+    const [dateOfBirth, setDateOfBirth] = useState()
+
+    const setDate = date => {
+        console.log(date)
+        setDateOfBirth(date)
+    }
+
+    const setPermission = () => {
+        const role = (initialValues.role === 'Admin') ? true : false;
+        console.log(role)
+
+        // Object.keys(selector).map((value) => (
+        //     let key = k.toString();
+        //     setSelector({...selector,[key] : role})
+        // ))
+    }
+
+    const [profilePic, setProfilePic] = useState()
 
     return (
         <>
             <Formik initialValues={initialValues}
-                onSubmit={handlelogin}
+                onSubmit={handleRegister}
                 validationSchema={formSchema}>
                 {
                     (props) => {
@@ -106,7 +119,7 @@ const NewUser = () => {
                             <Form>
 
                                 <div className="row flex-space-evenly">
-                                    <div className="col-md-8" style={{ marginRight: "-25px" }}>
+                                    <div className="col-md-12 col-lg-8" style={{ marginRight: "-25px" }}>
 
                                         <div className="container-fluid background-white margin-20px padding-20px">
 
@@ -119,24 +132,24 @@ const NewUser = () => {
                                             <div className="form-row">
 
                                                 <div className="form-group col-md-4">
-                                                    <label >First Name</label>
                                                     < FormikTextField
                                                         required
                                                         name="firstname"
+                                                        label="First Name"
                                                     />
                                                 </div>
                                                 <div className="form-group col-md-4">
-                                                    <label >Middle Name</label>
                                                     < FormikTextField
                                                         required
                                                         name="middlename"
+                                                        label="Middle Name"
                                                     />
                                                 </div>
                                                 <div className="form-group col-md-4">
-                                                    <label >Last Name</label>
                                                     < FormikTextField
                                                         required
                                                         name="lastname"
+                                                        label="Last Name"
                                                     />
                                                 </div>
                                             </div>
@@ -144,20 +157,24 @@ const NewUser = () => {
                                             <div className="form-row">
 
                                                 <div className="form-group col-md-4">
-                                                    <label >Date of Birth</label><br />
-                                                    <DatePicker id="example-datepicker" name="dateofbirth" />
+
+                                                    <div style={{ padding: '0 10px' }}>
+                                                        <label >Date of Birth</label><br />
+                                                        <DatePicker onChange={setDate} value={dateOfBirth}
+                                                            name="dateofbirth" />
+                                                    </div>
                                                 </div>
 
                                                 <div className="form-group col-md-4">
-                                                    <label >Gender</label><br />
                                                     <FormikSelect name="gender"
+                                                        label="Gender"
                                                         options={[{ value: "Male", display: "Male" },
                                                         { value: "Female", display: "Female" }]} />
                                                 </div>
 
                                                 <div className="form-group col-md-4">
-                                                    <label >Country</label><br />
                                                     <FormikSelect name="country"
+                                                        label="Country"
                                                         id="country" options={countries} value={initialValues.country} />
                                                 </div>
                                             </div>
@@ -165,100 +182,99 @@ const NewUser = () => {
                                             <div className="form-row">
 
                                                 <div className="form-group col-md-4">
-                                                    <label >Phone</label>
                                                     < FormikTextField
                                                         required
                                                         name="phone"
+                                                        label="Phone"
                                                     />
                                                     <label >(999) 999-9999</label>
                                                 </div>
 
                                                 <div className="form-group col-md-4">
-                                                    <label >Phone + Ext</label>
                                                     < FormikTextField
                                                         required
                                                         name="phoneext"
+                                                        label="Phone + Ext"
+                                                        label2="(999) 999-9999 99"
                                                     />
-                                                    <label >(999) 999-9999 99</label>
                                                 </div>
                                             </div>
 
                                             <div className="form-row">
 
                                                 <div className="form-group col-md-4">
-                                                    <label >Email</label>
                                                     < FormikTextField
                                                         required
                                                         name="email"
+                                                        label="Email"
                                                     />
                                                 </div>
 
                                                 <div className="form-group col-md-4">
-                                                    <label >Address</label>
-                                                    <FormikTextarea name="address" />
+                                                    <FormikTextarea name="address"
+                                                        label="Address" />
                                                 </div>
                                             </div>
                                             <br />
 
                                             <div className="form-row" style={{ borderTop: 'solid lightgray 1px', paddingTop: '20px' }}>
                                                 <div className="form-group col-md-4">
-                                                    <label >Username</label>
                                                     < FormikTextField
                                                         required
                                                         name="username"
+                                                        label="Username"
                                                     />
                                                 </div>
 
                                                 <div className="form-group col-md-4">
-                                                    <label >Password</label>
                                                     < FormikTextField
                                                         required
                                                         name="password"
                                                         type="password"
+                                                        label="Password"
                                                     />
                                                 </div>
                                                 <div className="form-group col-md-4">
-                                                    <label >Confirm Password</label>
                                                     < FormikTextField
                                                         required
                                                         name="confirmpassword"
                                                         type="password"
+                                                        label="Confirm Password"
                                                     />
                                                 </div>
                                             </div>
 
                                             <div className="form-row" style={{ borderTop: 'solid lightgray 1px', paddingTop: '20px' }}>
                                                 <div className="form-group col-md-4">
-                                                    <label >Role</label>
-                                                    <select className="form-control" id="exampleFormControlSelect1">
-                                                        <option>User</option>
-                                                        <option>Admin</option>
-                                                    </select>
+                                                    <FormikSelect name="gender"
+                                                        label="Role"
+                                                        options={[{ value: "User", display: "User" },
+                                                        { value: "Admin", display: "Admin" }]} handleChange={setPermissions} />
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className="col-md-4 ">
+
+                                    <div className="col-sm-12 col-md-12 col-lg-4 ">
                                         <div className="container background-white margin-20px padding-20px">
                                             <h4 style={{ marginBottom: "30px" }}>Photo</h4>
                                             <label className="control-label">Acceptable image formats are jpg, jpeg, png &amp; gif.</label>
                                             <label className="control-label">Maximum image size allowed is 2MB.</label>
-
                                             <label htmlFor="file-upload" className="custom-file-upload">
                                                 <img src={UploadImage} alt="" />
                                                 <p>click here to choose any image</p>
                                             </label>
-                                            {/* <input id="file-upload" type="file" /> */}
-                                            < FormikTextField
+                                            < input
                                                 id="file-upload"
                                                 type="file"
                                                 name="profilePic"
+                                                onChange={(e) => setProfilePic(e.target.files[0])}
                                             />
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-md-12" style={{ marginRight: "-25px" }}>
+                                <div className="col-md-12 col-lg-12" style={{ marginRight: "-25px" }}>
                                     <div className="container-fluid background-white margin-20px padding-20px">
                                         <div className="form-row">
                                             <div className="form-group col-md-12 ">
@@ -268,71 +284,69 @@ const NewUser = () => {
                                         <div className="form-row">
                                             <div class="table-responsive">
 
-                                                <table class="table">
-
+                                                <table className="table">
                                                     <thead>
+
                                                         <tr>
                                                             <th className="tableHeader">Webpage</th>
-                                                            <th className="th-lg"><input class="form-check-input" checked={permissions.AddDashboard} type="checkbox" name="1" onChange={handleSelectAll} /> Add</th>
-                                                            <th className="th-lg"><input class="form-check-input" checked={permissions.DeleteDashboard} type="checkbox" name="2" onChange={handleSelectAll} /> Delete</th>
-                                                            <th className="th-lg"><input class="form-check-input" checked={permissions.ModifyDashboard} type="checkbox" name="Modify" onChange={handleSelectAll} /> Modify</th>
-                                                            <th className="th-lg"><input class="form-check-input" checked={permissions.ReadDashboard} type="checkbox" name="Read" onChange={handleSelectAll} /> Read</th>
+                                                            <th className="th-lg"><input type="checkbox" checked={selector.add} name="add" onChange={handleSelectAll} /> Add</th>
+                                                            <th className="th-lg"><input type="checkbox" checked={selector.delete} name="delete" onChange={handleSelectAll} /> Delete</th>
+                                                            <th className="th-lg"><input type="checkbox" checked={selector.modify} name="modify" onChange={handleSelectAll} /> Modify</th>
+                                                            <th className="th-lg"><input type="checkbox" checked={selector.read} name="read" onChange={handleSelectAll} /> Read</th>
                                                         </tr>
 
                                                         <tr>
                                                             <td className="tableHeader">
                                                                 Dashboard</td>
-                                                            <td className="th-lg"><input class="form-check-input" checked={permissions.AddDashboard} type="checkbox" name="AddDashboard" onChange={handleChange} /> </td>
-                                                            <td className="th-lg"><input class="form-check-input" checked={permissions.DeleteDashboard} type="checkbox" name="DeleteDashboard" onChange={handleChange} /> </td>
-                                                            <td className="th-lg"><input class="form-check-input" checked={permissions.ModifyDashboard} type="checkbox" name="ModifyDashboard" onChange={handleChange} /> </td>
-                                                            <td className="th-lg"><input class="form-check-input" checked={permissions.ReadDashboard} type="checkbox" name="ReadDashboard" onChange={handleChange} /> </td>
+                                                            <td className="th-lg"><input checked={permissions.addDashboard} type="checkbox" name="addDashboard" onChange={handleChange} /> </td>
+                                                            <td className="th-lg"><input checked={permissions.deleteDashboard} type="checkbox" name="deleteDashboard" onChange={handleChange} /> </td>
+                                                            <td className="th-lg"><input checked={permissions.modifyDashboard} type="checkbox" name="modifyDashboard" onChange={handleChange} /> </td>
+                                                            <td className="th-lg"><input checked={permissions.readDashboard} type="checkbox" name="readDashboard" onChange={handleChange} /> </td>
                                                         </tr>
 
                                                         <tr>
                                                             <td className="tableHeader">Settings</td>
-                                                            <td className="th-lg"><input class="form-check-input" checked={permissions.AddSettings} type="checkbox" name="AddSettings" onChange={handleChange} /> </td>
-                                                            <td className="th-lg"><input class="form-check-input" checked={permissions.DeleteSettings} type="checkbox" name="DeleteSettings" onChange={handleChange} /> </td>
-                                                            <td className="th-lg"><input class="form-check-input" checked={permissions.ModifySettings} type="checkbox" name="ModifySettings" onChange={handleChange} /> </td>
-                                                            <td className="th-lg"><input class="form-check-input" checked={permissions.ReadSettings} type="checkbox" name="ReadSettings" onChange={handleChange} /> </td>
+                                                            <td className="th-lg"><input checked={permissions.addSettings} type="checkbox" name="addSettings" onChange={handleChange} /> </td>
+                                                            <td className="th-lg"><input checked={permissions.deleteSettings} type="checkbox" name="deleteSettings" onChange={handleChange} /> </td>
+                                                            <td className="th-lg"><input checked={permissions.modifySettings} type="checkbox" name="modifySettings" onChange={handleChange} /> </td>
+                                                            <td className="th-lg"><input checked={permissions.readSettings} type="checkbox" name="readSettings" onChange={handleChange} /> </td>
                                                         </tr>
 
                                                         <tr>
                                                             <td className="tableHeader">Users Information</td>
-                                                            <td className="th-lg"><input class="form-check-input" checked={permissions.AddUsersInformation} type="checkbox" name="AddUsersInformation" onChange={handleChange} /> </td>
-                                                            <td className="th-lg"><input class="form-check-input" checked={permissions.DeleteUsersInformation} type="checkbox" name="DeleteUsersInformation" onChange={handleChange} /> </td>
-                                                            <td className="th-lg"><input class="form-check-input" checked={permissions.ModifyUsersInformation} type="checkbox" name="ModifyUsersInformation" onChange={handleChange} /> </td>
-                                                            <td className="th-lg"><input class="form-check-input" checked={permissions.ReadUsersInformation} type="checkbox" name="ReadUsersInformation" onChange={handleChange} /> </td>
+                                                            <td className="th-lg"><input checked={permissions.addUsersInformation} type="checkbox" name="addUsersInformation" onChange={handleChange} /> </td>
+                                                            <td className="th-lg"><input checked={permissions.deleteUsersInformation} type="checkbox" name="deleteUsersInformation" onChange={handleChange} /> </td>
+                                                            <td className="th-lg"><input checked={permissions.modifyUsersInformation} type="checkbox" name="modifyUsersInformation" onChange={handleChange} /> </td>
+                                                            <td className="th-lg"><input checked={permissions.readUsersInformation} type="checkbox" name="readUsersInformation" onChange={handleChange} /> </td>
                                                         </tr>
 
                                                         <tr>
                                                             <td className="tableHeader">Web Page 1</td>
-                                                            <td className="th-lg"><input class="form-check-input" checked={permissions.AddWebPage1} type="checkbox" name="AddWebPage1" onChange={handleChange} /> </td>
-                                                            <td className="th-lg"><input class="form-check-input" checked={permissions.DeleteWebPage1} type="checkbox" name="DeleteWebPage1" onChange={handleChange} /> </td>
-                                                            <td className="th-lg"><input class="form-check-input" checked={permissions.ModifyWebPage1} type="checkbox" name="ModifyWebPage1" onChange={handleChange} /> </td>
-                                                            <td className="th-lg"><input class="form-check-input" checked={permissions.ReadWebPage1} type="checkbox" name="ReadWebPage1" onChange={handleChange} /> </td>
+                                                            <td className="th-lg"><input checked={permissions.addWebPage1} type="checkbox" name="addWebPage1" onChange={handleChange} /> </td>
+                                                            <td className="th-lg"><input checked={permissions.deleteWebPage1} type="checkbox" name="deleteWebPage1" onChange={handleChange} /> </td>
+                                                            <td className="th-lg"><input checked={permissions.modifyWebPage1} type="checkbox" name="modifyWebPage1" onChange={handleChange} /> </td>
+                                                            <td className="th-lg"><input checked={permissions.readWebPage1} type="checkbox" name="readWebPage1" onChange={handleChange} /> </td>
                                                         </tr>
 
                                                         <tr>
                                                             <td className="tableHeader">
                                                                 Web Page 2</td>
-                                                            <td className="th-lg"><input class="form-check-input" checked={permissions.AddWebPage2} type="checkbox" name="AddWebPage2" onChange={handleChange} /> </td>
-                                                            <td className="th-lg"><input class="form-check-input" checked={permissions.DeleteWebPage2} type="checkbox" name="DeleteWebPage2" onChange={handleChange} /> </td>
-                                                            <td className="th-lg"><input class="form-check-input" checked={permissions.ModifyWebPage2} type="checkbox" name="ModifyWebPage2" onChange={handleChange} /> </td>
-                                                            <td className="th-lg"><input class="form-check-input" checked={permissions.ReadWebPage2} type="checkbox" name="ReadWebPage2" onChange={handleChange} /> </td>
+                                                            <td className="th-lg"><input checked={permissions.addWebPage2} type="checkbox" name="addWebPage2" onChange={handleChange} /> </td>
+                                                            <td className="th-lg"><input checked={permissions.deleteWebPage2} type="checkbox" name="deleteWebPage2" onChange={handleChange} /> </td>
+                                                            <td className="th-lg"><input checked={permissions.modifyWebPage2} type="checkbox" name="modifyWebPage2" onChange={handleChange} /> </td>
+                                                            <td className="th-lg"><input checked={permissions.readWebPage2} type="checkbox" name="readWebPage2" onChange={handleChange} /> </td>
                                                         </tr>
 
                                                         <tr>
                                                             <td className="tableHeader">
                                                                 Web Page 3</td>
-                                                            <td className="th-lg"><input class="form-check-input" checked={permissions.AddWebPage3} type="checkbox" name="AddWebPage3" onChange={handleChange} /> </td>
-                                                            <td className="th-lg"><input class="form-check-input" checked={permissions.DeleteWebPage3} type="checkbox" name="DeleteWebPage3" onChange={handleChange} /> </td>
-                                                            <td className="th-lg"><input class="form-check-input" checked={permissions.ModifyWebPage3} type="checkbox" name="ModifyWebPage3" onChange={handleChange} /> </td>
-                                                            <td className="th-lg"><input class="form-check-input" checked={permissions.ReadWebPage3} type="checkbox" name="ReadWebPage3" onChange={handleChange} /> </td>
+                                                            <td className="th-lg"><input checked={permissions.addWebPage3} type="checkbox" name="addWebPage3" onChange={handleChange} /> </td>
+                                                            <td className="th-lg"><input checked={permissions.deleteWebPage3} type="checkbox" name="deleteWebPage3" onChange={handleChange} /> </td>
+                                                            <td className="th-lg"><input checked={permissions.modifyWebPage3} type="checkbox" name="modifyWebPage3" onChange={handleChange} /> </td>
+                                                            <td className="th-lg"><input checked={permissions.readWebPage3} type="checkbox" name="readWebPage3" onChange={handleChange} /> </td>
                                                         </tr>
-
                                                     </thead>
                                                 </table>
-
                                             </div>
                                         </div>
                                     </div>
@@ -340,13 +354,13 @@ const NewUser = () => {
 
 
 
-                                <div className="col-md-8" style={{ marginRight: "-25px" }}>
+                                <div className="col-md-12 flex-space-evenly" style={{ marginRight: "-25px", marginBottom: "30px" }}>
                                     <Button
-                                        variant="contained"
+                                        variant="primary"
                                         type="submit"
                                         disabled={!isValid}
-                                        color="primary">
-                                        Login
+                                    >
+                                        Submit
                                             </Button>
                                 </div>
                             </Form>

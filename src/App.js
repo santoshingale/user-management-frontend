@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import './styles/App.scss';
 import Login from './components/LoginPage'
 import ForgetPaaword from './components/ForgetPaaword'
@@ -8,6 +8,8 @@ import ProtectedRoute from './components/ProtectedRoute'
 import Dashboard from './components/Dashboard';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import Temp from './components/formik/Temp';
+
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -42,13 +44,16 @@ function App() {
         <Route exact path="/login"
           component={(props) => <Login isAuthenticated={isAuthenticated}
             handleLogin={handleLogin} openSnackbar={openSnackbar} {...props} />} />
+        <Route exact path="/temp"
+          component={(props) => <Temp isAuthenticated={isAuthenticated}
+            handleLogin={handleLogin} openSnackbar={openSnackbar} {...props} />} />
 
         <Route exact path="/forgetpassword"
           component={(props) => <ForgetPaaword isAuthenticated={isAuthenticated}
             handleReset={handleReset} {...props} />} />
       </Switch>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
-        <Alert onClose={handleClose} severity={userDetails?.status ===200? "success":"error"}>
+        <Alert onClose={handleClose} severity={userDetails?.status === 200 ? "success" : "error"}>
           {userDetails?.message}
         </Alert>
       </Snackbar>

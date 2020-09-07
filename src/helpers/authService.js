@@ -1,15 +1,47 @@
 import axios from "axios";
 import { url } from "../config/env-config";
 
-const tokenKey = 'skyfox_token';
+const tokenKey = 'user_token';
 
 export const authHeader = () => {
-    return {
-        headers: {
-            Authorization: 'Bearer ' + localStorage.getItem(tokenKey)
+
+    if (localStorage.getItem('user_token') !== null) {
+        return {
+            headers: {
+                token: 'Bearer ' + localStorage.getItem(tokenKey),
+            }
         }
-    };
+    } else {
+        return {
+            headers: {
+                token: 'Bearer ' + sessionStorage.getItem(tokenKey),
+            }
+        }
+    }
 }
+
+
+export const authHeaderMultiPart = () => {
+
+    if (localStorage.getItem('user_token') !== null) {
+        return {
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'multipart/form-data',
+                token: 'Bearer ' + localStorage.getItem(tokenKey),
+            }
+        }
+    } else {
+        return {
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'multipart/form-data',
+                token: 'Bearer ' + sessionStorage.getItem(tokenKey),
+            }
+        }
+    }
+}
+
 
 export const login = async (username, password, rememberMe) => {
 
@@ -22,10 +54,11 @@ export const login = async (username, password, rememberMe) => {
             sessionStorage.setItem(tokenKey, res.data.object.token)
         return res.data;
     }).catch((error) => {
-        if( error.response ){
-        return error.response.data}
+        if (error.response) {
+            return error.response.data
+        }
     });
-    
+
     return response;
 }
 

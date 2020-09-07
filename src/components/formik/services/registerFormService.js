@@ -2,9 +2,9 @@ import { object, string } from "yup";
 import registerRegex from './registerPattern.json'
 
 export const initialValues = {
-    firstname: '',
-    middlename: '',
-    lastname: '',
+    firstname: 'santosh',
+    middlename: 'Dilip',
+    lastname: 'Ingale',
     gender: 'Male',
     country: 'India',
     phone: '',
@@ -12,21 +12,20 @@ export const initialValues = {
     email: '',
     address: '',
     username: '',
-    password: '',
+    password: 'Si@12345',
     confirmpassword: '',
-    role: '',
-    profilePic:''
+    role: 'Admin',
 };
 
 export const formSchema = object({
-    firstname: string("Enter first name")
-        .required("Firstname is required")
-        .min(2, "Firstname must have at least 2 characters")
-        .matches(registerRegex.username, "Invalid Firstname")
-    ,
-    address: string("Enter address")
-        .required("Address required")
-        .min(10, "Address must have at least 10 characters")
+    // firstname: string("Enter first name")
+    //     .required("Firstname is required")
+    //     .min(2, "Firstname must have at least 2 characters")
+    //     .matches(registerRegex.username, "Invalid Firstname")
+    // ,
+    // address: string("Enter address")
+    //     .required("Address required")
+    //     .min(10, "Address must have at least 10 characters")
     // ,
     // middlename: string("Enter middle name")
     //     .required("Middlename is required")

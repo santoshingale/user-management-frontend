@@ -3,68 +3,54 @@ import React, { useState } from 'react'
 const Permisions = () => {
 
     const [permissions, setPermissions] = useState({
-        AddDashboard: false,
-        DeleteDashboard: false,
-        ModifyDashboard: false,
-        ReadDashboard: false,
+        addDashboard: false,
+        deleteDashboard: false,
+        modifyDashboard: false,
+        readDashboard: false,
 
-        AddSettings: false,
-        DeleteSettings: false,
-        ModifySettings: false,
-        ReadSettings: false,
+        addSettings: false,
+        deleteSettings: false,
+        modifySettings: false,
+        readSettings: false,
 
-        AddUsersInformation: false,
-        DeleteUsersInformation: false,
-        ModifyUsersInformation: false,
-        ReadUsersInformation: false,
+        addUsersInformation: false,
+        deleteUsersInformation: false,
+        modifyUsersInformation: false,
+        readUsersInformation: false,
 
-        AddWebPage1: false,
-        DeleteWebPage1: false,
-        ModifyWebPage1: false,
-        ReadWebPage1: false,
+        addWebPage1: false,
+        deleteWebPage1: false,
+        modifyWebPage1: false,
+        readWebPage1: false,
 
-        AddWebPage2: false,
-        DeleteWebPage2: false,
-        ModifyWebPage2: false,
-        ReadWebPage2: false,
+        addWebPage2: false,
+        deleteWebPage2: false,
+        modifyWebPage2: false,
+        readWebPage2: false,
 
-        AddWebPage3: false,
-        DeleteWebPage3: false,
-        ModifyWebPage3: false,
-        ReadWebPage3: false,
+        addWebPage3: false,
+        deleteWebPage3: false,
+        modifyWebPage3: false,
+        readWebPage3: false,
 
 
     })
 
-    const handleChange = async (event) => {
-        await setPermissions({ ...permissions, [event.target.name]: event.target.checked });
+    const handleChange = (event) => {
+        setPermissions({ ...permissions, [event.target.name]: event.target.checked });
     };
 
-       const handleSelectAll = (event) => {
+    const handleSelectAll = (event) => {
             for (var k in permissions) {
-                if (k.includes(event.target.name)) {
+                if (k.includes("add")) {
                     console.log(k)
-                    setPermissions(prevState=> ({ ...prevState, [k]: true }))
+                    let timerId = setInterval(() => {
+                    setPermissions(prevState=>({ ...prevState, [k]: true }));
+                    }, 200)
                 }
             }
-        }
-
-
-    // const keys = ["AddDashboard", "DeleteDashboard", "ModifyDashboard", "ReadDashboard", "AddSettings", "DeleteSettings", "ModifySettings", "ReadSettings",
-    //     "AddUsersInformation", "DeleteUsersInformation", "ModifyUsersInformation", "ReadUsersInformation", "AddWebPage1", "DeleteWebPage1", "ModifyWebPage1", "ReadWebPage1",
-    //     "AddWebPage2", "DeleteWebPage2", "ModifyWebPage2", "ReadWebPage2", "AddWebPage3", "DeleteWebPage3", "ModifyWebPage3", "ReadWebPage3"]
-
-    // const handleSelectAll = (event) => {
-    //     var k = event.target.name - 1;
-    //     console.log(k)
-
-    //     for (k; k < keys.length; k += 4) {
-    //         console.log(keys[k])
-    //         setPermissions(prevPermissions => ({ ...prevPermissions, [keys[k]]: true }))
-    //     }
-    // }
-
-
+        
+    }
 
     return (
         <div>
@@ -75,67 +61,67 @@ const Permisions = () => {
                     </div>
                 </div>
                 <div className="form-row">
-                    <div class="table-responsive">
-
-                        <table class="table">
+                    <div className="table-responsive">
+                        {/* {console.log(permissions)} */}
+                        <table className="table">
 
                             <tr>
                                 <th className="tableHeader">Webpage</th>
-                                <th className="th-lg"><input class="form-check-input" type="checkbox" name="1" onChange={handleSelectAll} /> Add</th>
-                                <th className="th-lg"><input class="form-check-input" type="checkbox" name="2" onChange={handleSelectAll} /> Delete</th>
-                                <th className="th-lg"><input class="form-check-input" type="checkbox" name="Modify" onChange={handleSelectAll} /> Modify</th>
-                                <th className="th-lg"><input class="form-check-input" type="checkbox" name="Read" onChange={handleSelectAll} /> Read</th>
+                                <th className="th-lg"><input className="form-check-input" type="checkbox" name="add" onChange={handleSelectAll} /> Add</th>
+                                <th className="th-lg"><input className="form-check-input" type="checkbox" name="delete" onChange={handleSelectAll} /> Delete</th>
+                                <th className="th-lg"><input className="form-check-input" type="checkbox" name="modify" onChange={handleSelectAll} /> Modify</th>
+                                <th className="th-lg"><input className="form-check-input" type="checkbox" name="read" onChange={handleSelectAll} /> Read</th>
                             </tr>
 
                             <tr>
                                 <td className="tableHeader">
                                     Dashboard</td>
-                                <td className="th-lg"><input class="form-check-input" checked={permissions.AddDashboard} type="checkbox" name="AddDashboard" onChange={handleChange} /> </td>
-                                <td className="th-lg"><input class="form-check-input" checked={permissions.DeleteDashboard} type="checkbox" name="DeleteDashboard" onChange={handleChange} /> </td>
-                                <td className="th-lg"><input class="form-check-input" checked={permissions.ModifyDashboard} type="checkbox" name="ModifyDashboard" onChange={handleChange} /> </td>
-                                <td className="th-lg"><input class="form-check-input" checked={permissions.ReadDashboard} type="checkbox" name="ReadDashboard" onChange={handleChange} /> </td>
+                                <td className="th-lg"><input className="form-check-input" checked={permissions.addDashboard} type="checkbox" name="addDashboard" onChange={handleChange} /> </td>
+                                <td className="th-lg"><input className="form-check-input" checked={permissions.deleteDashboard} type="checkbox" name="deleteDashboard" onChange={handleChange} /> </td>
+                                <td className="th-lg"><input className="form-check-input" checked={permissions.modifyDashboard} type="checkbox" name="modifyDashboard" onChange={handleChange} /> </td>
+                                <td className="th-lg"><input className="form-check-input" checked={permissions.readDashboard} type="checkbox" name="readDashboard" onChange={handleChange} /> </td>
                             </tr>
 
                             <tr>
                                 <td className="tableHeader">Settings</td>
-                                <td className="th-lg"><input class="form-check-input" checked={permissions.AddSettings} type="checkbox" name="AddSettings" onChange={handleChange} /> </td>
-                                <td className="th-lg"><input class="form-check-input" checked={permissions.DeleteSettings} type="checkbox" name="DeleteSettings" onChange={handleChange} /> </td>
-                                <td className="th-lg"><input class="form-check-input" checked={permissions.ModifySettings} type="checkbox" name="ModifySettings" onChange={handleChange} /> </td>
-                                <td className="th-lg"><input class="form-check-input" checked={permissions.ReadSettings} type="checkbox" name="ReadSettings" onChange={handleChange} /> </td>
+                                <td className="th-lg"><input className="form-check-input" checked={permissions.addSettings} type="checkbox" name="addSettings" onChange={handleChange} /> </td>
+                                <td className="th-lg"><input className="form-check-input" checked={permissions.deleteSettings} type="checkbox" name="deleteSettings" onChange={handleChange} /> </td>
+                                <td className="th-lg"><input className="form-check-input" checked={permissions.modifySettings} type="checkbox" name="modifySettings" onChange={handleChange} /> </td>
+                                <td className="th-lg"><input className="form-check-input" checked={permissions.readSettings} type="checkbox" name="readSettings" onChange={handleChange} /> </td>
                             </tr>
 
                             <tr>
                                 <td className="tableHeader">Users Information</td>
-                                <td className="th-lg"><input class="form-check-input" checked={permissions.AddUsersInformation} type="checkbox" name="AddUsersInformation" onChange={handleChange} /> </td>
-                                <td className="th-lg"><input class="form-check-input" checked={permissions.DeleteUsersInformation} type="checkbox" name="DeleteUsersInformation" onChange={handleChange} /> </td>
-                                <td className="th-lg"><input class="form-check-input" checked={permissions.ModifyUsersInformation} type="checkbox" name="ModifyUsersInformation" onChange={handleChange} /> </td>
-                                <td className="th-lg"><input class="form-check-input" checked={permissions.ReadUsersInformation} type="checkbox" name="ReadUsersInformation" onChange={handleChange} /> </td>
+                                <td className="th-lg"><input className="form-check-input" checked={permissions.addUsersInformation} type="checkbox" name="addUsersInformation" onChange={handleChange} /> </td>
+                                <td className="th-lg"><input className="form-check-input" checked={permissions.deleteUsersInformation} type="checkbox" name="deleteUsersInformation" onChange={handleChange} /> </td>
+                                <td className="th-lg"><input className="form-check-input" checked={permissions.modifyUsersInformation} type="checkbox" name="modifyUsersInformation" onChange={handleChange} /> </td>
+                                <td className="th-lg"><input className="form-check-input" checked={permissions.readUsersInformation} type="checkbox" name="readUsersInformation" onChange={handleChange} /> </td>
                             </tr>
 
                             <tr>
                                 <td className="tableHeader">Web Page 1</td>
-                                <td className="th-lg"><input class="form-check-input" checked={permissions.AddWebPage1} type="checkbox" name="AddWebPage1" onChange={handleChange} /> </td>
-                                <td className="th-lg"><input class="form-check-input" checked={permissions.DeleteWebPage1} type="checkbox" name="DeleteWebPage1" onChange={handleChange} /> </td>
-                                <td className="th-lg"><input class="form-check-input" checked={permissions.ModifyWebPage1} type="checkbox" name="ModifyWebPage1" onChange={handleChange} /> </td>
-                                <td className="th-lg"><input class="form-check-input" checked={permissions.ReadWebPage1} type="checkbox" name="ReadWebPage1" onChange={handleChange} /> </td>
+                                <td className="th-lg"><input className="form-check-input" checked={permissions.addWebPage1} type="checkbox" name="addWebPage1" onChange={handleChange} /> </td>
+                                <td className="th-lg"><input className="form-check-input" checked={permissions.deleteWebPage1} type="checkbox" name="deleteWebPage1" onChange={handleChange} /> </td>
+                                <td className="th-lg"><input className="form-check-input" checked={permissions.modifyWebPage1} type="checkbox" name="modifyWebPage1" onChange={handleChange} /> </td>
+                                <td className="th-lg"><input className="form-check-input" checked={permissions.readWebPage1} type="checkbox" name="readWebPage1" onChange={handleChange} /> </td>
                             </tr>
 
                             <tr>
                                 <td className="tableHeader">
                                     Web Page 2</td>
-                                <td className="th-lg"><input class="form-check-input" checked={permissions.AddWebPage2} type="checkbox" name="AddWebPage2" onChange={handleChange} /> </td>
-                                <td className="th-lg"><input class="form-check-input" checked={permissions.DeleteWebPage2} type="checkbox" name="DeleteWebPage2" onChange={handleChange} /> </td>
-                                <td className="th-lg"><input class="form-check-input" checked={permissions.ModifyWebPage2} type="checkbox" name="ModifyWebPage2" onChange={handleChange} /> </td>
-                                <td className="th-lg"><input class="form-check-input" checked={permissions.ReadWebPage2} type="checkbox" name="ReadWebPage2" onChange={handleChange} /> </td>
+                                <td className="th-lg"><input className="form-check-input" checked={permissions.addWebPage2} type="checkbox" name="addWebPage2" onChange={handleChange} /> </td>
+                                <td className="th-lg"><input className="form-check-input" checked={permissions.deleteWebPage2} type="checkbox" name="deleteWebPage2" onChange={handleChange} /> </td>
+                                <td className="th-lg"><input className="form-check-input" checked={permissions.modifyWebPage2} type="checkbox" name="modifyWebPage2" onChange={handleChange} /> </td>
+                                <td className="th-lg"><input className="form-check-input" checked={permissions.readWebPage2} type="checkbox" name="readWebPage2" onChange={handleChange} /> </td>
                             </tr>
 
                             <tr>
                                 <td className="tableHeader">
                                     Web Page 3</td>
-                                <td className="th-lg"><input class="form-check-input" checked={permissions.AddWebPage3} type="checkbox" name="AddWebPage3" onChange={handleChange} /> </td>
-                                <td className="th-lg"><input class="form-check-input" checked={permissions.DeleteWebPage3} type="checkbox" name="DeleteWebPage3" onChange={handleChange} /> </td>
-                                <td className="th-lg"><input class="form-check-input" checked={permissions.ModifyWebPage3} type="checkbox" name="ModifyWebPage3" onChange={handleChange} /> </td>
-                                <td className="th-lg"><input class="form-check-input" checked={permissions.ReadWebPage3} type="checkbox" name="ReadWebPage3" onChange={handleChange} /> </td>
+                                <td className="th-lg"><input className="form-check-input" checked={permissions.addWebPage3} type="checkbox" name="addWebPage3" onChange={handleChange} /> </td>
+                                <td className="th-lg"><input className="form-check-input" checked={permissions.deleteWebPage3} type="checkbox" name="deleteWebPage3" onChange={handleChange} /> </td>
+                                <td className="th-lg"><input className="form-check-input" checked={permissions.modifyWebPage3} type="checkbox" name="modifyWebPage3" onChange={handleChange} /> </td>
+                                <td className="th-lg"><input className="form-check-input" checked={permissions.readWebPage3} type="checkbox" name="readWebPage3" onChange={handleChange} /> </td>
                             </tr>
 
                         </table>

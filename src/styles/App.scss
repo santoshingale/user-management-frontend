@@ -38,4 +38,18 @@ html {
     display: flex;
     align-items: center;
   }
+
+  button{
+    
+  }
+
+  svg {
+		color: white !important;
+
+		overflow: visible;
+
+		path {
+			fill: white !important;
+		}
+	}
 }
