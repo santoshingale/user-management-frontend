@@ -1,108 +1,83 @@
-import React, { useState } from 'react'
-import UseForm from './UserForm'
+import React, { useState, useEffect } from 'react'
+import DatePicker from 'react-date-picker';
+import UploadImage from '../assets/upload-image.png'
+import { Form, Formik } from "formik";
+import { FormikTextField, FormikTextarea, FormikSelect } from "./formik";
+import { formSchema, initialValues } from "./formik/services/registerFormService";
+import axios from 'axios'
+import Button from 'react-bootstrap/Button';
+import apiService from '../helpers/apiService';
 
-const NewUser = () => {
+const UserForm = ({ permissions, setPermissions }) => {
 
-    // const [countries, setCountries] = useState([]);
+    useEffect(() => {
+        axios.get('https://disease.sh/v3/covid-19/countries')
+            .then(res => {
+                const countries = res.data.map((country) => ({
+                    value: country.country,
+                }));
+                setCountries(countries)
+            })
+    }, [])
 
-    const [permissions, setPermissions] = useState({
-        addDashboard: false,
-        deleteDashboard: false,
-        modifyDashboard: false,
-        readDashboard: false,
+    const [selector, setSelector] = useState({ add: false, modify: false, delete: false, read: false })
 
-        addSettings: false,
-        deleteSettings: false,
-        modifySettings: false,
-        readSettings: false,
+    const handleChange = (event) => {
+        setPermissions({ ...permissions, [event.target.name]: event.target.checked });
+    };
 
-        addUsersInformation: false,
-        deleteUsersInformation: false,
-        modifyUsersInformation: false,
-        readUsersInformation: false,
-
-        addWebPage1: false,
-        deleteWebPage1: false,
-        modifyWebPage1: false,
-        readWebPage1: false,
-
-        addWebPage2: false,
-        deleteWebPage2: false,
-        modifyWebPage2: false,
-        readWebPage2: false,
-
-        addWebPage3: false,
-        deleteWebPage3: false,
-        modifyWebPage3: false,
-        readWebPage3: false,
-    })
-
-    // const [selector, setSelector] = useState({ add: false, modify: false, delete: false, read: false })
-
-    // const handleChange = (event) => {
-    //     setPermissions({ ...permissions, [event.target.name]: event.target.checked });
-    // };
+    const [countries, setCountries] = useState([]);
 
 
-    // const handleSelectAll = async (event) => {
-    //     for (let k in permissions) {
-    //         const value = event.target.checked
-    //         if (k.includes(event.target.name)) {
-    //             let key = k.toString()
-    //             setPermissions((prevState) => ({ ...prevState, [key]: value }));
-    //         }
-    //     }
-    //     setSelector({ ...selector, [event.target.name]: event.target.checked })
-    // }
+    const handleSelectAll = async (event) => {
+        for (let k in permissions) {
+            const value = event.target.checked
+            if (k.includes(event.target.name)) {
+                let key = k.toString()
+                setPermissions((prevState) => ({ ...prevState, [key]: value }));
+            }
+        }
+        setSelector({ ...selector, [event.target.name]: event.target.checked })
+    }
 
-    // const setPermission = () => {
-    //     const e = document.getElementById("role");
-    //     var _role = e.options[e.selectedIndex].value;
-    //     const role = (_role === 'Admin') ? true : false;
+    const setPermission = () => {
+        const e = document.getElementById("role");
+        var _role = e.options[e.selectedIndex].value;
+        const role = (_role === 'Admin') ? true : false;
 
 
-    //     Object.keys(selector).map((value) => {
-    //         let key = value.toString();
-    //         setSelector(prevState => ({ ...prevState, [key]: role }))
-    //     })
+        Object.keys(selector).map((value) => {
+            let key = value.toString();
+            setSelector(prevState => ({ ...prevState, [key]: role }))
+        })
 
-    //     Object.keys(permissions).map((value) => {
-    //         let key = value.toString();
-    //         setPermissions(prevState => ({ ...prevState, [key]: role }))
-    //     })
-    // }
+        Object.keys(permissions).map((value) => {
+            let key = value.toString();
+            setPermissions(prevState => ({ ...prevState, [key]: role }))
+        })
+    }
 
-    // useEffect(() => {
-    //     axios.get('https://disease.sh/v3/covid-19/countries')
-    //         .then(res => {
-    //             const countries = res.data.map((country) => ({
-    //                 value: country.country,
-    //             }));
-    //             setCountries(countries)
-    //         })
-    // }, [])
+    const handleRegister = async (props) => {
+        let payload = { ...props, ...permissions }
+        delete payload.confirmpassword
+        const path = "home/register";
+        const formData = new FormData();
+        formData.append('profilePic', profilePic);
+        formData.append('register', JSON.stringify(payload))
+        const resp = await apiService.postMultipart(path, formData)
+    }
 
-    // const handleRegister = async (props) => {
-    //     let payload = { ...props, ...permissions }
-    //     delete payload.confirmpassword
-    //     const path = "home/register";
-    //     const formData = new FormData();
-    //     formData.append('profilePic', profilePic);
-    //     formData.append('register', JSON.stringify(payload))
-    //     const resp = await apiService.postMultipart(path, formData)
-    // }
+    const [dateOfBirth, setDateOfBirth] = useState()
 
-    // const [dateOfBirth, setDateOfBirth] = useState()
+    const setDate = date => {
+        setDateOfBirth(date)
+    }
 
-    // const setDate = date => {
-    //     setDateOfBirth(date)
-    // }
-
-    // const [profilePic, setProfilePic] = useState()
+    const [profilePic, setProfilePic] = useState()
 
     return (
         <>
-            {/* <Formik initialValues={initialValues}
+            <Formik initialValues={initialValues}
                 onSubmit={handleRegister}
                 validationSchema={formSchema}>
                 {
@@ -247,7 +222,6 @@ const NewUser = () => {
                                                         options={[{ value: "User", display: "User" },
                                                         { value: "Admin", display: "Admin" }]} onChange={setPermission}
                                                     />
-                                                    {console.log(initialValues.role)}
                                                 </div>
                                             </div>
                                         </div>
@@ -374,10 +348,9 @@ const NewUser = () => {
                         );
                     }
                 }
-            </Formik> */}
-            <UseForm permissions={permissions} setPermissions={setPermissions}/>
+            </Formik>
         </>
     )
 }
 
-export default NewUser
+export default UserForm

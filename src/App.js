@@ -8,7 +8,6 @@ import ProtectedRoute from './components/ProtectedRoute'
 import Dashboard from './components/Dashboard';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import Temp from './components/formik/Temp';
 
 
 function Alert(props) {
@@ -43,9 +42,6 @@ function App() {
 
         <Route exact path="/login"
           component={(props) => <Login isAuthenticated={isAuthenticated}
-            handleLogin={handleLogin} openSnackbar={openSnackbar} {...props} />} />
-        <Route exact path="/temp"
-          component={(props) => <Temp isAuthenticated={isAuthenticated}
             handleLogin={handleLogin} openSnackbar={openSnackbar} {...props} />} />
 
         <Route exact path="/forgetpassword"

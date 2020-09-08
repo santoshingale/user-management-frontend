@@ -1,14 +1,18 @@
 // noinspection ES6CheckImport
-import {Redirect, Route} from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import React from "react";
 import PropTypes from "prop-types";
+import Dashboard from './Dashboard';
 
-const ProtectedRoute = ({component: Component, isAuthenticated, ...rest}) => {
+
+const ProtectedRoute = ({ component: Component, isAuthenticated, match, ...rest }) => {
+
 
     const renderedComponent = (props) => {
-        const {location} = props;
+        const { location } = props;
+        // console.log(props)
         return isAuthenticated
-            ? (<Component {...props}/>)
+            ? (<Component {...props} />)
             : (
                 <Redirect
                     to={{
@@ -22,10 +26,20 @@ const ProtectedRoute = ({component: Component, isAuthenticated, ...rest}) => {
     };
 
     return (
-        <Route
-            {...rest}
-            component={renderedComponent}
-        />
+
+        <Switch>
+            <Route path={`${rest.path}/register`}
+                {...rest}
+                exact
+                component={renderedComponent}
+            />
+            {/* <Route
+                {...rest}
+                component={renderedComponent}
+
+            /> */}
+            {console.log(rest.path)}
+        </Switch>
     );
 }
 

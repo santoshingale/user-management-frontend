@@ -5,7 +5,7 @@ import { authHeader, authHeaderMultiPart } from "./authService";
 const promiseWithErrorHandling = (promise) => {
     return promise.catch((err) => {
         if (err.response && err.response.status === 500) {
-            // window.location.assign("/error");
+            window.location.assign("/error");
         } else {
             throw err;
         }

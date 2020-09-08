@@ -1,5 +1,6 @@
 import axios from "axios";
 import { url } from "../config/env-config";
+import apiService from './apiService';
 
 const tokenKey = 'user_token';
 
@@ -45,7 +46,7 @@ export const authHeaderMultiPart = () => {
 
 export const login = async (username, password, rememberMe) => {
 
-    const response = await axios.post(`${url}/login`, {
+    const response = await apiService.post('login',{
         email: username,
         password: password
     }).then((res) => {

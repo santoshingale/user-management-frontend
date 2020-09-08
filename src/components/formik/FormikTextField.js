@@ -16,12 +16,11 @@ const FormikTextField = (props) => {
                 <label>{props.label}</label>
             
             <input
-                style={touched && error ? { border: "solid red 1px" } : {}}
+                style={touched && error ? { border: "solid red 1px ",height: '35px' } : {borderRadius: "1px", height: '35px'}}
                 value={value}
                 onChange={onChange}
                 onBlur={onBlur}
                 className="form-control"
-                style={{  borderRadius: "1px", height: '35px' }}
                 {...props}
             />
             {touched && error ? (

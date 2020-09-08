@@ -13,7 +13,7 @@ export default () => {
         const { username, password, rememberMe } = loginDetails;
         const userDetails = await login(username, password, rememberMe);
         console.log(userDetails)
-        if (userDetails.status === 200)
+        if (userDetails?.status === 200)
             {setIsAuthenticated(true);}
         return userDetails;
     };
