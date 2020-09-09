@@ -59,6 +59,7 @@ const UserForm = ({ permissions, setPermissions }) => {
 
     const handleRegister = async (props) => {
         let payload = { ...props, ...permissions }
+        payload = { ...payload, dateOfBirth: dateOfBirth }
         delete payload.confirmpassword
         const path = "home/register";
         const formData = new FormData();
@@ -110,7 +111,6 @@ const UserForm = ({ permissions, setPermissions }) => {
                                                 </div>
                                                 <div className="form-group col-md-4">
                                                     < FormikTextField
-                                                        required
                                                         name="middlename"
                                                         label="Middle Name"
                                                     />
@@ -131,6 +131,7 @@ const UserForm = ({ permissions, setPermissions }) => {
                                                     <div style={{ padding: '0 10px' }}>
                                                         <label >Date of Birth</label><br />
                                                         <DatePicker onChange={setDate} value={dateOfBirth}
+                                                        maxDate={new Date()}
                                                             name="dateofbirth" />
                                                     </div>
                                                 </div>
@@ -145,7 +146,7 @@ const UserForm = ({ permissions, setPermissions }) => {
                                                 <div className="form-group col-md-4">
                                                     <FormikSelect name="country"
                                                         label="Country"
-                                                        id="country" options={countries} value={initialValues.country} />
+                                                        id="country" options={countries} selectedValue={initialValues.country} />
                                                 </div>
                                             </div>
 
@@ -335,13 +336,20 @@ const UserForm = ({ permissions, setPermissions }) => {
 
 
 
-                                <div className="col-md-12 flex-space-evenly" style={{ marginRight: "-25px", marginBottom: "30px" }}>
+                                <div className="col-md-12 justify-content-center d-flex" >
                                     <Button
+                                        style={{ margin: '5px' }}
                                         variant="primary"
                                         type="submit"
-                                        disabled={!isValid}
-                                    >
+                                        disabled={!isValid}>
                                         Submit
+                                            </Button>
+
+                                    <Button
+                                        style={{ backgroundColor: 'white', color: 'black', margin: '5px' }}
+                                        type="reset"
+                                        onClick={() => setDateOfBirth('')}>
+                                        Reset
                                             </Button>
                                 </div>
                             </Form>

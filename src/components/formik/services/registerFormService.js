@@ -14,7 +14,7 @@ export const initialValues = {
     username: '',
     password: 'Si@12345',
     confirmpassword: '',
-    role: 'Admin',
+    role: 'Admin'
 };
 
 export const formSchema = object({
@@ -28,7 +28,6 @@ export const formSchema = object({
         .min(10, "Address must have at least 10 characters")
     ,
     middlename: string("Enter middle name")
-        .required("Middlename is required")
         .min(2, "Middlename must have at least 2 characters")
         .matches(registerRegex.username, "Invalid Middlename")
     ,

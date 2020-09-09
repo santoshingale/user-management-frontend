@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ReactComponent as DashboardIcon } from '../assets/dashboard.svg'
 import { ReactComponent as Files } from '../assets/files.svg'
@@ -7,55 +7,71 @@ import { ReactComponent as Settings } from '../assets/settings.svg'
 import { ReactComponent as PowerOff } from '../assets/power-off.svg'
 import { ReactComponent as User } from '../assets/user.svg'
 import { ReactComponent as ArrowsHorizontal } from '../assets/arrows-horizontal.svg'
-import angleLeft  from '../assets/angle-left.svg'
+import angleLeft from '../assets/angle-left.svg'
 import Button from 'react-bootstrap/Button';
 
 
 const Navbar = ({ sidebar, isNavbarFull, halfNavNab }) => {
 
+  const [userTab, setUserTab] = useState(false)
+
   return (
     <nav id='sidebar' className={sidebar ? 'hideSidebar' : isNavbarFull ? '' : 'active'}>
       <ul className='nav-menu-items'>
         <li className="nav-text">
-          <Link to='/home'>
+          <div className="list">
             <DashboardIcon />
             <span >Dashboard <Button className="button">UPDATED</Button></span>
-          </Link>
+          </div>
         </li>
 
         <li className="nav-text">
-          <Link to='/home'>
+          <div className="list">
             <Files />
-            <span>Webpages <img src={angleLeft} alt=""/></span>
-          </Link>
+            <span>Webpages <img src={angleLeft} alt="" /></span>
+          </div>
         </li>
 
-        <li className="nav-text">
-          <Link to='/home'>
+        <li className="nav-text" onClick={() => setUserTab(!userTab)}>
+          <div className="list">
             <User />
-            <span >Users <img src={angleLeft} alt=""/></span>
+            <span >Users <img src={angleLeft} alt="" /></span>
+          </div>
+        </li>
+        <li className="" style={userTab ? {} : { display: 'none' }}>
+        <Link to="/adduser">
+          <div className="list">
+            <span >New User </span>
+          </div>
           </Link>
         </li>
 
+        <li className="" style={userTab ? {} : { display: 'none' }}>
+          <Link to="/userlist">
+          <div className="list">
+            <span >Users List <Button className="button">UPDATED</Button></span>
+          </div>
+          </Link>
+        </li>
         <li className="nav-text">
-          <Link to='/home'>
+          <div className="list">
             <IdBadge />
             <span >Profile</span>
-          </Link>
+          </div>
         </li>
 
         <li className="nav-text">
-          <Link to='/home'>
+          <div className="list">
             <Settings />
-            <span >Settings <img src={angleLeft} alt=""/></span>
-          </Link>
+            <span >Settings <img src={angleLeft} alt="" /></span>
+          </div>
         </li>
 
         <li className="nav-text">
-          <Link to='/home'>
+          <div className="list">
             <PowerOff />
             <span >Logout</span>
-          </Link>
+          </div>
         </li>
         <div className="navShifter">
           <Button variant="primary" size="sm" onClick={halfNavNab} >

@@ -63,6 +63,21 @@ $primary: #2B333E;
 				}
 			}
 
+			.list {
+				padding: 12px 0;
+				text-decoration: none;
+				margin: 0;
+
+				span {
+					margin-left: 10px;
+					font-size: 14px;
+					vertical-align: middle;
+					img{
+						margin-top: 11px;
+					}
+				}
+			}
+
 			&:hover {
 				background-color: #12131a;
 			}
@@ -78,7 +93,7 @@ $primary: #2B333E;
 			li {
 				font-size: 14px;
 
-				a {
+				.list {
 					padding: 10px 0;
 
 					span {
@@ -121,7 +136,7 @@ $primary: #2B333E;
 				}
 			}
 
-			a {
+			.list {
 				padding: 10px 20px 10px 30px;
 				display: block;
 				color: rgba(255, 255, 255, 1);

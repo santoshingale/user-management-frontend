@@ -21,7 +21,7 @@ const FormikSelect = (props) => {
             id={id}
         >
             {options.map((option) => (selectedValue === option.value) ?
-                <option  key={option.value} value={option.value}>{option.value}</option> :
+                <option  key={option.value} selected value={option.value}>{option.value}</option> :
                 <option key={option.value} value={option.value}>{option.value}</option>)}
         </select>
         </div>

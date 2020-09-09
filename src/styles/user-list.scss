@@ -1,0 +1,58 @@
+.user-list {
+    box-sizing: border-box;
+
+    // #f8f9fa
+    .padding {
+        padding: 10px 30px;
+        background-color: #f8f9fa;
+    }
+
+    .container-fluid {
+        border: solid lightgray 1px;
+        margin: 2%;
+        width: 96%;
+        border-radius: 3px;
+        background-color: #fff;
+        padding: 15px;
+        padding-top: 0;
+
+        .button-new-user {
+            height: 25px;
+            padding: 4px 8px;
+            background-color: #5bc0de;
+            top: -0.4em;
+            font-size: 11px;
+            border-radius: 3px;
+            border-color: #4ebbdb;
+
+            svg {
+                height: 13px;
+                margin-right: 5px;
+            }
+        }
+
+        .table-holder {
+            padding: 35px 10px;
+
+            .row {
+                margin-bottom: 25px;
+            }
+
+            table {
+                th {
+                    font-size: 14px;
+                    color: gray;
+                    font-weight: normal;
+                    border-color: #ddd;
+                    border-bottom-style: none;
+                    height: 15px;
+                    padding: 0.5rem;
+                    // &:nth-child(8){
+                    //     background-color: black;
+                    // }
+                }
+            }
+        }
+
+    }
+}
