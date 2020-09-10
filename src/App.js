@@ -9,8 +9,8 @@ import Dashboard from './components/Dashboard';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import NewUser from './components/NewUser';
-import LoginPage from './components/LoginPage';
 import UserList from './components/UserList';
+import UpdateUserDetails from './components/UpdateUserDetails';
 
 
 function Alert(props) {
@@ -43,7 +43,8 @@ function App() {
         <Redirect path="/" exact to="dashboard" />
         <ProtectedRoute exact path="/dashboard" component={Dashboard} isAuthenticated={isAuthenticated} componentName="Users"/>
         <ProtectedRoute exact path="/adduser" component={NewUser} isAuthenticated={isAuthenticated} componentName="New user"/>
-        <ProtectedRoute exact path="/userlist" component={UserList} isAuthenticated={isAuthenticated} />
+        <ProtectedRoute exact path="/userlist" component={UserList} isAuthenticated={isAuthenticated} componentName="Users"/>
+        <ProtectedRoute exact path="/updateuser" component={UpdateUserDetails} isAuthenticated={isAuthenticated} componentName="Users"/>
         {/* <ProtectedRoute exact path="/home" component={Dashboard} isAuthenticated={isAuthenticated} /> */}
 
         <Route exact path="/login"

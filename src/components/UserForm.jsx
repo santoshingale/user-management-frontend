@@ -3,12 +3,12 @@ import DatePicker from 'react-date-picker';
 import UploadImage from '../assets/upload-image.png'
 import { Form, Formik } from "formik";
 import { FormikTextField, FormikTextarea, FormikSelect } from "./formik";
-import { formSchema, initialValues } from "./formik/services/registerFormService";
+import { formSchema } from "./formik/services/registerFormService";
 import axios from 'axios'
 import Button from 'react-bootstrap/Button';
-import apiService from '../helpers/apiService';
 
-const UserForm = ({ permissions, setPermissions }) => {
+const UserForm = ({ permissions, setPermissions, initialValues, dateOfBirth, setDateOfBirth, handleSubmit,
+    profilePic, setProfilePic }) => {
 
     useEffect(() => {
         axios.get('https://disease.sh/v3/covid-19/countries')
@@ -21,15 +21,14 @@ const UserForm = ({ permissions, setPermissions }) => {
     }, [])
 
     const [selector, setSelector] = useState({ add: false, modify: false, delete: false, read: false })
+    const [countries, setCountries] = useState([]);
+
 
     const handleChange = (event) => {
         setPermissions({ ...permissions, [event.target.name]: event.target.checked });
     };
 
-    const [countries, setCountries] = useState([]);
-
-
-    const handleSelectAll = async (event) => {
+    const handleCheckRow = async (event) => {
         for (let k in permissions) {
             const value = event.target.checked
             if (k.includes(event.target.name)) {
@@ -40,7 +39,7 @@ const UserForm = ({ permissions, setPermissions }) => {
         setSelector({ ...selector, [event.target.name]: event.target.checked })
     }
 
-    const setPermission = () => {
+    const handleCheckAll = () => {
         const e = document.getElementById("role");
         var _role = e.options[e.selectedIndex].value;
         const role = (_role === 'Admin') ? true : false;
@@ -57,29 +56,10 @@ const UserForm = ({ permissions, setPermissions }) => {
         })
     }
 
-    const handleRegister = async (props) => {
-        let payload = { ...props, ...permissions }
-        payload = { ...payload, dateOfBirth: dateOfBirth }
-        delete payload.confirmpassword
-        const path = "home/register";
-        const formData = new FormData();
-        formData.append('profilePic', profilePic);
-        formData.append('register', JSON.stringify(payload))
-        const resp = await apiService.postMultipart(path, formData)
-    }
-
-    const [dateOfBirth, setDateOfBirth] = useState()
-
-    const setDate = date => {
-        setDateOfBirth(date)
-    }
-
-    const [profilePic, setProfilePic] = useState()
-
     return (
         <>
             <Formik initialValues={initialValues}
-                onSubmit={handleRegister}
+                onSubmit={handleSubmit}
                 validationSchema={formSchema}>
                 {
                     (props) => {
@@ -130,8 +110,8 @@ const UserForm = ({ permissions, setPermissions }) => {
 
                                                     <div style={{ padding: '0 10px' }}>
                                                         <label >Date of Birth</label><br />
-                                                        <DatePicker onChange={setDate} value={dateOfBirth}
-                                                        maxDate={new Date()}
+                                                        <DatePicker onChange={(date) => setDateOfBirth(date)} value={dateOfBirth}
+                                                            maxDate={new Date()}
                                                             name="dateofbirth" />
                                                     </div>
                                                 </div>
@@ -217,11 +197,12 @@ const UserForm = ({ permissions, setPermissions }) => {
 
                                             <div className="form-row" style={{ borderTop: 'solid lightgray 1px', paddingTop: '20px' }}>
                                                 <div className="form-group col-md-4">
-                                                    <FormikSelect name="gender"
+                                                    <FormikSelect name="role"
                                                         label="Role"
                                                         id="role"
+                                                        selectedValue={initialValues.role}
                                                         options={[{ value: "User", display: "User" },
-                                                        { value: "Admin", display: "Admin" }]} onChange={setPermission}
+                                                        { value: "Admin", display: "Admin" }]} onChange={handleCheckAll}
                                                     />
                                                 </div>
                                             </div>
@@ -271,10 +252,10 @@ const UserForm = ({ permissions, setPermissions }) => {
 
                                                         <tr>
                                                             <th className="tableHeader">Webpage</th>
-                                                            <th className="th-lg"><input type="checkbox" checked={selector.add} name="add" onChange={handleSelectAll} /> Add</th>
-                                                            <th className="th-lg"><input type="checkbox" checked={selector.delete} name="delete" onChange={handleSelectAll} /> Delete</th>
-                                                            <th className="th-lg"><input type="checkbox" checked={selector.modify} name="modify" onChange={handleSelectAll} /> Modify</th>
-                                                            <th className="th-lg"><input type="checkbox" checked={selector.read} name="read" onChange={handleSelectAll} /> Read</th>
+                                                            <th className="th-lg"><input type="checkbox" checked={selector.add} name="add" onChange={handleCheckRow} /> Add</th>
+                                                            <th className="th-lg"><input type="checkbox" checked={selector.delete} name="delete" onChange={handleCheckRow} /> Delete</th>
+                                                            <th className="th-lg"><input type="checkbox" checked={selector.modify} name="modify" onChange={handleCheckRow} /> Modify</th>
+                                                            <th className="th-lg"><input type="checkbox" checked={selector.read} name="read" onChange={handleCheckRow} /> Read</th>
                                                         </tr>
 
                                                         <tr>

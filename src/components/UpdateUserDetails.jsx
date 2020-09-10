@@ -1,9 +1,23 @@
 import React, { useState } from 'react'
+import { useLocation } from "react-router-dom";
 import UserForm from './UserForm'
-import { initialValues } from "./formik/services/registerFormService";
 import apiService from '../helpers/apiService';
 
-const NewUser = () => {
+
+const UpdateUserDetails = () => {
+
+    // useEffect(() => {
+    //     effect
+    //     return () => {
+    //         cleanup
+    //     }
+    // }, [input])
+
+    const location = useLocation();
+
+    const initialValues = location.state.user;
+
+    console.log(initialValues.userPermission)
 
     const [permissions, setPermissions] = useState({
         addDashboard: false,
@@ -37,7 +51,7 @@ const NewUser = () => {
         readWebPage3: false,
     })
 
-    const [dateOfBirth, setDateOfBirth] = useState()
+    const [dateOfBirth, setDateOfBirth] = useState(initialValues.dateOfBirth)
     const [profilePic, setProfilePic] = useState()
 
 
@@ -51,14 +65,20 @@ const NewUser = () => {
         formData.append('register', JSON.stringify(payload))
         const resp = await apiService.postMultipart(path, formData)
     }
-    
+
+
     return (
         <>
-            <UserForm permissions={permissions} setPermissions={setPermissions} initialValues={initialValues} 
-            dateOfBirth={dateOfBirth} setDateOfBirth={setDateOfBirth} handleSubmit={handleSubmit}
-            profilePic={profilePic} setProfilePic={setProfilePic}/>
+            {console.log(location.state)}
+            <UserForm
+                permissions={permissions} setPermissions={setPermissions}
+                initialValues={initialValues}
+                dateOfBirth={dateOfBirth} setDateOfBirth={setDateOfBirth} handleSubmit={handleSubmit}
+                profilePic={profilePic} setProfilePic={setProfilePic}
+            />
         </>
     )
 }
 
-export default NewUser
+export default UpdateUserDetails
+

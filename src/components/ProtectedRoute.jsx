@@ -37,7 +37,7 @@ const ProtectedRoute = ({ component: Component, componentName, isAuthenticated, 
     return (
 
         <div className="dashboard">
-            <div class="wrapper d-flex align-items-stretch">
+            <div className="wrapper d-flex align-items-stretch">
                 <Header showSidebar={showSidebar} sidebar={sidebar} />
 
                 <Navbar sidebar={sidebar} isNavbarFull={isNavbarFull} halfNavNab={halfNavNab} />

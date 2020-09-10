@@ -14,7 +14,7 @@ export const initialValues = {
     username: '',
     password: 'Si@12345',
     confirmpassword: '',
-    role: 'Admin'
+    role: 'User'
 };
 
 export const formSchema = object({
