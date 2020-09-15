@@ -12,14 +12,12 @@ import NewUser from './components/NewUser';
 import UserList from './components/UserList';
 import UpdateUserDetails from './components/UpdateUserDetails';
 
-
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 function App() {
-  // const { isAuthenticated, handleLogin, handleLogout, handleReset } = useAuth();
-  const { isAuthenticated, handleLogin, handleReset } = useAuth();
+  const { isAuthenticated, handleLogin, handleReset, handleLogout } = useAuth();
   const [userDetails, setUserDetails] = useState({})
   const [open, setOpen] = useState(false);
 
@@ -36,15 +34,14 @@ function App() {
     setOpen(false);
   };
 
-
   return (
     <Router>
       <Switch>
         <Redirect path="/" exact to="dashboard" />
-        <ProtectedRoute exact path="/dashboard" component={Dashboard} isAuthenticated={isAuthenticated} componentName="Users"/>
-        <ProtectedRoute exact path="/adduser" component={NewUser} isAuthenticated={isAuthenticated} componentName="New user"/>
-        <ProtectedRoute exact path="/userlist" component={UserList} isAuthenticated={isAuthenticated} componentName="Users"/>
-        <ProtectedRoute exact path="/updateuser" component={UpdateUserDetails} isAuthenticated={isAuthenticated} componentName="Users"/>
+        <ProtectedRoute exact path="/dashboard" component={Dashboard} isAuthenticated={isAuthenticated} handleLogout={handleLogout} componentName="Users" />
+        <ProtectedRoute exact path="/adduser" component={NewUser} isAuthenticated={isAuthenticated} handleLogout={handleLogout} componentName="New user" />
+        <ProtectedRoute exact path="/userlist" component={UserList} isAuthenticated={isAuthenticated} handleLogout={handleLogout} componentName="Users" />
+        <ProtectedRoute exact path="/updateuser" component={UpdateUserDetails} isAuthenticated={isAuthenticated} handleLogout={handleLogout} componentName="Users" />
         {/* <ProtectedRoute exact path="/home" component={Dashboard} isAuthenticated={isAuthenticated} /> */}
 
         <Route exact path="/login"

@@ -7,7 +7,7 @@
     box-sizing: border-box;
 
     .container-fluid {
-        padding-left: 0px;
+        padding: 0 10px 28px 10px !important;
         min-width: 320px;
         overflow: scroll;
         padding: 0;
@@ -67,7 +67,7 @@
 
 
     .margin-20px {
-        margin: 30px 0;
+        margin-bottom: 30px;
     }
 
     .margin-20px1 {
@@ -80,22 +80,26 @@
         height: 35px;
         background-color: #F5F6F9;
         border: none;
-        .react-date-picker__wrapper{
+
+        .react-date-picker__wrapper {
             border: solid lightgray 1px;
 
         }
-        svg{
-            fill:lightgray;
+
+        svg {
+            fill: lightgray;
         }
 
-        .react-date-picker__calendar-button{
-            svg{
-                fill:lightgray!important;
+        .react-date-picker__calendar-button {
+            svg {
+                fill: lightgray !important;
             }
         }
-        input[type=text]{
-            color: lightgray!important;
+
+        input[type=text] {
+            color: lightgray !important;
         }
+
         .react-date-picker__clear-button {
             display: none;
         }
@@ -156,5 +160,226 @@
         display: flex;
         align-items: center;
         min-width: 320px;
+        margin: 0 -10px 30px -10px;
+    }
+}
+
+.status-holder {
+    margin: auto;
+    border-radius: 3px;
+    padding: 20px 25px;
+    margin-bottom: 30px;
+    border: 1px solid #d1d6e6;
+    background: #fff;
+
+    .rounded-avtar {
+        border-radius: 50%;
+        display: block;
+        position: relative;
+        width: 50px;
+        height: 50px;
+        float: left;
+        text-align: center;
+        color: #fff;
+        overflow: hidden;
+        background-color: #0E9BE2;
+
+        :nth-child(2) {
+            background-color: #1DBB8E;
+        }
+
+        :nth-child(3) {
+            background-color: #ff4402;
+        }
+
+        :nth-child(4) {
+            background-color: #F3BB23;
+        }
+
+
+        &:after {
+            display: block;
+            position: absolute;
+            top: 23px;
+            left: 4px;
+            content: "";
+            background-color: rgba(255, 255, 255, 0.2);
+            width: 130%;
+            height: 100%;
+            transform: rotate(-30deg);
+        }
+    }
+
+    .right-side-avtar {
+        padding-left: 65px;
+
+        .total-title {
+            display: block;
+            font-size: 12px;
+            color: #a0aeba;
+
+            b {
+                font-weight: 700;
+            }
+        }
+
+        .value-avtar {
+            color: #0E9BE2;
+            font-size: x-large;
+        }
+    }
+}
+
+.panel {
+    border-radius: 3px;
+    box-shadow: none;
+    margin-bottom: 30px;
+    border: 1px solid #d1d6e6;
+    background: #fff;
+
+    .pannel-holding {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        position: relative;
+        line-height: 1;
+        border-bottom: 1px solid #eaeff2;
+        background-color: #f8f9fa;
+        padding-left: 20px;
+
+        .heading-dashboard {
+            display: inline-block;
+            vertical-align: middle;
+            vertical-align: auto;
+            zoom: 1;
+            display: inline;
+            margin: 0;
+            font-size: 14px;
+            font-weight: 500;
+            color: #717d84;
+        }
+    }
+
+    .pannel-body {
+        padding-right: 15px;
+        padding-left: 15px;
+
+        // background-color: blueviolet;
+        table {
+            border-collapse: collapse;
+            height: 430px !important;
+            overflow: scroll;
+
+            tbody {
+                tr {
+                    height: 106px !important;
+
+                    .table-data {
+                        height: 100%;
+                        width: 100%;
+                        padding: 25px;
+                        display: flex;
+                        align-items: center;
+
+                        img {
+                            width: 55px;
+                            height: 55px;
+                            border-radius: 50%;
+                            object-fit: cover;
+                            border: solid green 2px;
+                        }
+
+                        .name-registration {
+                            padding-left: 20px;
+                            display: flex;
+                            flex-direction: column;
+
+                            .heading-list-name {
+                                display: inline-block;
+                                vertical-align: middle;
+                                vertical-align: auto;
+                                zoom: 1;
+                                display: inline;
+                                margin: 0;
+                                font-size: 14px;
+                                font-weight: 500;
+                                color: #4b5458;
+                            }
+
+                            .heading-list-time {
+                                display: inline-block;
+                                vertical-align: middle;
+                                vertical-align: auto;
+                                zoom: 1;
+                                display: inline;
+                                margin: 0;
+                                font-size: 14px;
+                                font-weight: 500;
+                                color: #849199;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.line-graph-holder {
+    padding: 25px;
+
+    .chartjs-render-monitor {
+        height: 353px !important;
+        border-right: solid #eaeff2 1px;
+    }
+}
+
+.bar-graph-holder {
+    padding: 25px;
+    ul{
+        li{
+            display: flex;
+            justify-content: space-between;
+            p{
+                color: #5e6773;
+                margin:0;
+                font-size: 14px;
+                padding: 0 0 5px 0;
+            }
+        }
+    }
+    h5 {
+        margin: 0 0 10px 0;
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+    .progress {
+        height: 10px;
+        margin-bottom: 5px;
+        .progress-bar {
+            background-color: #20B2AA;
+        }
+    }
+
+    .chartjs-render-monitor {
+        width: 100%;
+        height: auto !important;
+        padding: 0%;
+    }
+
+    .gender-ration {
+        
+
+        p {
+            display: flex;
+            margin: 0%;
+            justify-content: space-between;
+
+            label {
+                color: #5e6773;
+                font-size: 13px;
+                margin-bottom: 3px;
+            }
+        }
     }
 }

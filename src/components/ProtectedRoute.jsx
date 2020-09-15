@@ -6,16 +6,15 @@ import Header from './Header'
 import Navbar from './Navbar';
 import '../styles/navbar.scss'
 
-const ProtectedRoute = ({ component: Component, componentName, isAuthenticated, ...rest }) => {
+const ProtectedRoute = ({ component: Component, handleLogout, componentName, isAuthenticated, ...rest }) => {
 
-    const [sidebar, setSidebar] = useState(false);
+    const [sidebar, setSidebar] = useState(true);
 
     const showSidebar = () => setSidebar(!sidebar);
 
     const [isNavbarFull, setIsNavbarFull] = useState(true)
 
     const halfNavNab = () => setIsNavbarFull(!isNavbarFull);
-
 
     const renderedComponent = (props) => {
 
@@ -38,9 +37,9 @@ const ProtectedRoute = ({ component: Component, componentName, isAuthenticated, 
 
         <div className="dashboard">
             <div className="wrapper d-flex align-items-stretch">
-                <Header showSidebar={showSidebar} sidebar={sidebar} />
+                <Header showSidebar={showSidebar} sidebar={sidebar} handleLogout={handleLogout} />
 
-                <Navbar sidebar={sidebar} isNavbarFull={isNavbarFull} halfNavNab={halfNavNab} />
+                <Navbar sidebar={sidebar} isNavbarFull={isNavbarFull} halfNavNab={halfNavNab} handleLogout={handleLogout} />
 
                 <div className="container-fluid">
                     <div className=" first-div">

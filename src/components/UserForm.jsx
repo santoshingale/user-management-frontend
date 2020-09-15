@@ -8,7 +8,7 @@ import axios from 'axios'
 import Button from 'react-bootstrap/Button';
 
 const UserForm = ({ permissions, setPermissions, initialValues, dateOfBirth, setDateOfBirth, handleSubmit,
-    profilePic, setProfilePic }) => {
+    profilePic, setProfilePic,setIsProfilePicChange }) => {
 
     useEffect(() => {
         axios.get('https://disease.sh/v3/covid-19/countries')
@@ -232,7 +232,7 @@ const UserForm = ({ permissions, setPermissions, initialValues, dateOfBirth, set
                                                 id="file-upload"
                                                 type="file"
                                                 name="profilePic"
-                                                onChange={(e) => setProfilePic(e.target.files[0])}
+                                                onChange={(e) => setProfilePic(e.target.files[0],setIsProfilePicChange(true))}
                                             />
                                         </div>
                                     </div>
@@ -245,7 +245,7 @@ const UserForm = ({ permissions, setPermissions, initialValues, dateOfBirth, set
                                             </div>
                                         </div>
                                         <div className="form-row">
-                                            <div class="table-responsive">
+                                            <div className="table-responsive">
 
                                                 <table className="table">
                                                     <thead>

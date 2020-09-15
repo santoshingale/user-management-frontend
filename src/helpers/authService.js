@@ -27,16 +27,19 @@ export const authHeaderMultiPart = () => {
     if (localStorage.getItem('user_token') !== null) {
         return {
             headers: {
-                Accept: 'application/json',
-                'Content-Type': 'multipart/form-data',
+                // Accept: 'application/json',
+
+                // 'Content-Type': 'multipart/form-data',
+                'Content-Type': 'undefined',
                 token: 'Bearer ' + localStorage.getItem(tokenKey),
             }
         }
     } else {
         return {
             headers: {
-                Accept: 'application/json',
-                'Content-Type': 'multipart/form-data',
+                // Accept: 'application/json',
+                // 'Content-Type': 'multipart/form-data',
+                'Content-Type': 'undefined',
                 token: 'Bearer ' + sessionStorage.getItem(tokenKey),
             }
         }

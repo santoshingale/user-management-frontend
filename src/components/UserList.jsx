@@ -21,11 +21,11 @@ const UserList = () => {
     useEffect(() => {
         async function fetchPages() {
             if (searchKey === "") {
-                const userCount = await apiService.get('user/count', {})
+                const userCount = await apiService.get('home/user/count', {})
                 await setPages(Math.ceil(userCount.data.object / listSize))
 
             } else {
-                const userCount = await apiService.get(`user/count?searchKey=${searchKey}`)
+                const userCount = await apiService.get(`home/user/count?searchKey=${searchKey}`)
                 setPages(Math.ceil(userCount.data.object / listSize))
             }
         }
@@ -35,10 +35,10 @@ const UserList = () => {
     useEffect(() => {
         async function fetchList() {
             if (searchKey === "") {
-                const list = await apiService.get(`user/list?listLength=${listSize}&pageNumber=${page}`)
+                const list = await apiService.get(`home/user/list?listLength=${listSize}&pageNumber=${page}`)
                 setUsersList(list.data.object)
             } else {
-                const list = await apiService.get(`user/list?listLength=${listSize}&pageNumber=${page}&searchKey=${searchKey}`, {})
+                const list = await apiService.get(`home/user/list?listLength=${listSize}&pageNumber=${page}&searchKey=${searchKey}`, {})
                 setUsersList(list.data.object)
             }
         }
@@ -50,7 +50,7 @@ const UserList = () => {
     };
 
     const handleDelete = async (event) => {
-        await apiService.get(`user/delete?id=${event.target.id}`)
+        await apiService.get(`home/user/delete?id=${event.target.id}`)
         setCount(count + 1);
     }
 
@@ -100,7 +100,7 @@ const UserList = () => {
                         <tbody>
 
                             {usersList.map((user) => {
-                                const userPic = `http://localhost:8080/user/image/${user.profilePic}`
+                                const userPic = `http://localhost:8080/home/user/image/${user.profilePic}`
                                 return <tr>
                                     <td style={{ textAlign: "center", padding: '5px 2px' }}><img src={userPic} alt="" style={{ height: '40px', objectFit: 'cover' }} /></td>
                                     <td>{user.firstname} {user.middlename} {user.lastname}</td>

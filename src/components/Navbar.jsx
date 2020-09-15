@@ -11,19 +11,21 @@ import angleLeft from '../assets/angle-left.svg'
 import Button from 'react-bootstrap/Button';
 
 
-const Navbar = ({ sidebar, isNavbarFull, halfNavNab }) => {
+const Navbar = ({ sidebar, isNavbarFull, halfNavNab, handleLogout }) => {
 
   const [userTab, setUserTab] = useState(false)
 
   return (
     <nav id='sidebar' className={sidebar ? 'hideSidebar' : isNavbarFull ? '' : 'active'}>
       <ul className='nav-menu-items'>
-        <li className="nav-text">
-          <div className="list">
-            <DashboardIcon />
-            <span >Dashboard <Button className="button">UPDATED</Button></span>
-          </div>
-        </li>
+        <Link to="/dashboard">
+          <li className="nav-text">
+            <div className="list">
+              <DashboardIcon />
+              <span >Dashboard <Button className="button">UPDATED</Button></span>
+            </div>
+          </li>
+        </Link>
 
         <li className="nav-text">
           <div className="list">
@@ -39,18 +41,18 @@ const Navbar = ({ sidebar, isNavbarFull, halfNavNab }) => {
           </div>
         </li>
         <li className="" style={userTab ? {} : { display: 'none' }}>
-        <Link to="/adduser">
-          <div className="list">
-            <span >New User </span>
-          </div>
+          <Link to="/adduser">
+            <div className="list">
+              <span >New User </span>
+            </div>
           </Link>
         </li>
 
         <li className="" style={userTab ? {} : { display: 'none' }}>
           <Link to="/userlist">
-          <div className="list">
-            <span >Users List <Button className="button">UPDATED</Button></span>
-          </div>
+            <div className="list">
+              <span >Users List <Button className="button">UPDATED</Button></span>
+            </div>
           </Link>
         </li>
         <li className="nav-text">
@@ -67,7 +69,7 @@ const Navbar = ({ sidebar, isNavbarFull, halfNavNab }) => {
           </div>
         </li>
 
-        <li className="nav-text">
+        <li className="nav-text" onClick={handleLogout}>
           <div className="list">
             <PowerOff />
             <span >Logout</span>

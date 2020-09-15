@@ -1,81 +1,49 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useLocation } from "react-router-dom";
 import UserForm from './UserForm'
 import apiService from '../helpers/apiService';
 
-
 const UpdateUserDetails = () => {
 
-    // useEffect(() => {
-    //     effect
-    //     return () => {
-    //         cleanup
-    //     }
-    // }, [input])
-
     const location = useLocation();
-
-    const initialValues = location.state.user;
-
-    console.log(initialValues.userPermission)
-
-    const [permissions, setPermissions] = useState({
-        addDashboard: false,
-        deleteDashboard: false,
-        modifyDashboard: false,
-        readDashboard: false,
-
-        addSettings: false,
-        deleteSettings: false,
-        modifySettings: false,
-        readSettings: false,
-
-        addUsersInformation: false,
-        deleteUsersInformation: false,
-        modifyUsersInformation: false,
-        readUsersInformation: false,
-
-        addWebPage1: false,
-        deleteWebPage1: false,
-        modifyWebPage1: false,
-        readWebPage1: false,
-
-        addWebPage2: false,
-        deleteWebPage2: false,
-        modifyWebPage2: false,
-        readWebPage2: false,
-
-        addWebPage3: false,
-        deleteWebPage3: false,
-        modifyWebPage3: false,
-        readWebPage3: false,
-    })
-
+    const initialValues = { ...location.state.user, confirmpassword: '' };
+    let [permissions, setPermissions] = useState(initialValues.userPermission)
+    var image = new Image();
+    image.src = `http://localhost:8080/home/user/image/${initialValues.profilePic}`;
     const [dateOfBirth, setDateOfBirth] = useState(initialValues.dateOfBirth)
-    const [profilePic, setProfilePic] = useState()
 
+    const [isProfilePicChange, setIsProfilePicChange] = useState(false)
+    const [profilePic, setProfilePic] = useState()
+    const [permissionId, setPermissionId] = useState(initialValues.userPermission.id)
 
     const handleSubmit = async (props) => {
-        let payload = { ...props, ...permissions }
-        payload = { ...payload, dateOfBirth: dateOfBirth }
+        permissions = {...permissions, id:permissionId}
+        let payload = { ...props, userPermission: permissions, dateOfBirth: dateOfBirth }
         delete payload.confirmpassword
-        const path = "home/register";
+        console.log(payload)
+        const path = "home/user/update";
         const formData = new FormData();
-        formData.append('profilePic', profilePic);
-        formData.append('register', JSON.stringify(payload))
+        if (isProfilePicChange) {
+            formData.append('update', new Blob([JSON.stringify(payload)], { type: "application/json" }))
+            formData.append('profilePic', profilePic);
+        }
+        else {
+            formData.append('update', new Blob([JSON.stringify(payload)], { type: "application/json" }))
+        }
         const resp = await apiService.postMultipart(path, formData)
     }
 
-
     return (
         <>
-            {console.log(location.state)}
+            {console.log(isProfilePicChange)}
             <UserForm
                 permissions={permissions} setPermissions={setPermissions}
                 initialValues={initialValues}
                 dateOfBirth={dateOfBirth} setDateOfBirth={setDateOfBirth} handleSubmit={handleSubmit}
                 profilePic={profilePic} setProfilePic={setProfilePic}
+                setIsProfilePicChange={setIsProfilePicChange}
             />
+
         </>
     )
 }

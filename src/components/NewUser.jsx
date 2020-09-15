@@ -37,26 +37,28 @@ const NewUser = () => {
         readWebPage3: false,
     })
 
+    const [isProfilePicChange, setIsProfilePicChange] = useState(false)
     const [dateOfBirth, setDateOfBirth] = useState()
     const [profilePic, setProfilePic] = useState()
 
 
     const handleSubmit = async (props) => {
-        let payload = { ...props, ...permissions }
-        payload = { ...payload, dateOfBirth: dateOfBirth }
+        let payload = { ...props, ...permissions,dateOfBirth: dateOfBirth }
+        payload = { ...payload,  }
         delete payload.confirmpassword
         const path = "home/register";
         const formData = new FormData();
+        console.log(profilePic)
+        console.log(payload)
+        formData.append('register', new Blob([JSON.stringify(payload)],{type: "application/json"}))
         formData.append('profilePic', profilePic);
-        formData.append('register', JSON.stringify(payload))
         const resp = await apiService.postMultipart(path, formData)
     }
-    
     return (
         <>
-            <UserForm permissions={permissions} setPermissions={setPermissions} initialValues={initialValues} 
-            dateOfBirth={dateOfBirth} setDateOfBirth={setDateOfBirth} handleSubmit={handleSubmit}
-            profilePic={profilePic} setProfilePic={setProfilePic}/>
+            <UserForm permissions={permissions} setPermissions={setPermissions} initialValues={initialValues}
+                dateOfBirth={dateOfBirth} setDateOfBirth={setDateOfBirth} handleSubmit={handleSubmit}
+                profilePic={profilePic} setProfilePic={setProfilePic} setIsProfilePicChange={setIsProfilePicChange}/>
         </>
     )
 }
