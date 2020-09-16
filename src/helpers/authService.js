@@ -27,9 +27,6 @@ export const authHeaderMultiPart = () => {
     if (localStorage.getItem('user_token') !== null) {
         return {
             headers: {
-                // Accept: 'application/json',
-
-                // 'Content-Type': 'multipart/form-data',
                 'Content-Type': 'undefined',
                 token: 'Bearer ' + localStorage.getItem(tokenKey),
             }
@@ -37,8 +34,6 @@ export const authHeaderMultiPart = () => {
     } else {
         return {
             headers: {
-                // Accept: 'application/json',
-                // 'Content-Type': 'multipart/form-data',
                 'Content-Type': 'undefined',
                 token: 'Bearer ' + sessionStorage.getItem(tokenKey),
             }
@@ -54,8 +49,8 @@ export const login = async (username, password, rememberMe) => {
         password: password
     }).then((res) => {
         rememberMe ?
-            localStorage.setItem(tokenKey, res.data.object.token) :
-            sessionStorage.setItem(tokenKey, res.data.object.token)
+            localStorage.setItem(tokenKey, JSON.stringify(res.data.object)) :
+            sessionStorage.setItem(tokenKey, JSON.stringify(res.data.object))
         return res.data;
     }).catch((error) => {
         if (error.response) {

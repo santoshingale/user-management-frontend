@@ -1,15 +1,14 @@
 import React from 'react'
 import { Navbar, NavLink } from 'react-bootstrap';
-import adminImg from '../assets/adminImage.jpg'
 import { ReactComponent as ArrowCircle } from '../assets/arrow-circle-right.svg'
-import { makeStyles } from '@material-ui/core/styles';
 import Popover from '@material-ui/core/Popover';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import { ReactComponent as PowerOff } from '../assets/power-off.svg'
+import { useSelector } from 'react-redux'
+
 
 
 const Header = ({ showSidebar, sidebar, handleLogout }) => {
+    const user = useSelector(users => users.user)
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -26,14 +25,15 @@ const Header = ({ showSidebar, sidebar, handleLogout }) => {
 
     return (
         <>
+        {console.log(user[0]?.profilePic)}
             <Navbar className="justify-content-between header-bar" fixed="top ">
                 <div className="navTitle">
                     <Navbar.Brand className="header-brand" >User Management</Navbar.Brand>
                     <ArrowCircle onClick={showSidebar} style={sidebar ? {} : { transform: 'rotateY(180deg)' }} />
                 </div>
                 <NavLink onClick={handleClick} className="header-link">
-                    <img src={adminImg} alt="header" />
-                Home
+                    <img src={`http://localhost:8080/home/user/image/${user[0]?.profilePic}`} alt="header" />
+                    {user[0]?.firstname}
                 </NavLink>
                 <Popover
                     id={id}

@@ -4,6 +4,8 @@ import { ProgressBar } from 'react-bootstrap';
 import numeral from 'numeral'
 import apiService from '../helpers/apiService';
 import moment from 'moment'
+import { Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
 
 
 const options1 = {
@@ -13,6 +15,7 @@ const options1 = {
     scales: {
         xAxes: [
             {
+                display: false,
                 gridLines: {
                     display: false
                 }
@@ -85,6 +88,7 @@ function Chart({ casesType }) {
     const [horizontalChartData, setHorizontalChartData] = useState()
     const [topLocation, setTopLocation] = useState()
     const [topLocationData, setTopLocationData] = useState()
+    const [chartTimeLime, setChartTimeLime] = useState()
     let _ageGroup = [0, 0, 0, 0, 0, 0, 0]
     let _counter = {}
     let _userRatioByGender = { Male: 0, Female: 0 }
@@ -177,6 +181,11 @@ function Chart({ casesType }) {
     return (
         <>
             <div className="col-lg-8 col-md-8 col-sm-12 col-12 line-graph-holder">
+                <div className="chart-button-holder">
+                    <Button >All time</Button>
+                    <Button >2020 </Button>
+                    <Button >September</Button>
+                </div>
                 {chartData?.length > 0 &&
                     <Line data={{
                         datasets: [
@@ -195,24 +204,24 @@ function Chart({ casesType }) {
             <div className="col-lg-4 col-md-4 col-sm-12 col-12 bar-graph-holder">
                 <h5>Top Locations</h5>
                 <ul >
-                    {console.log(topLocation)}
-                    {topLocation?.map((value,index) =>
-                        <li key={index}> <p>{index+1}  {value}</p> {topLocationData[value]}</li>
+                    {topLocation?.map((value, index) =>
+                        <li key={index}> <p>{index + 1}  {value}</p> {topLocationData[value]}</li>
                     )}
                 </ul>
+                <Link to="">See All Locations</Link>
 
                 <div className="gender-ration">
                     <h5>Gender</h5>
                     <p style={{ color: "#5e6773", fontSize: "13px" }}>
                         <label >Male</label>
-                        <label >{numeral((userRationByGender["Male"] / (userRationByGender["Male"] + userRationByGender["Female"])) * 100).format("0.0")}</label>
+                        <label >{numeral((userRationByGender["Male"] / (userRationByGender["Male"] + userRationByGender["Female"])) * 100).format("0.0")}%</label>
                     </p>
 
                     <ProgressBar now={(userRationByGender["Male"] / (userRationByGender["Male"] + userRationByGender["Female"])) * 100} />
 
                     <p style={{ color: "#5e6773", fontSize: "13px" }}>
                         <label >Female</label>
-                        <label >{numeral((userRationByGender["Female"] / (userRationByGender["Male"] + userRationByGender["Female"])) * 100).format("0.0")}</label>
+                        <label >{numeral((userRationByGender["Female"] / (userRationByGender["Male"] + userRationByGender["Female"])) * 100).format("0.0")}%</label>
                     </p>
                     <ProgressBar now={(userRationByGender["Female"] / (userRationByGender["Male"] + userRationByGender["Female"])) * 100} />
 

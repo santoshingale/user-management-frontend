@@ -4,6 +4,7 @@ import apiService from '../helpers/apiService';
 import StatusBar from './StatusBar';
 import Chart from './Chart';
 import Moment from 'react-moment';
+import { Link } from 'react-router-dom';
 
 let tl = gsap.timeline();
 
@@ -52,6 +53,9 @@ const Dashboard = () => {
                         <div className="panel">
                             <div className="pannel-holding">
                                 <h5 className="heading-dashboard">Latest Registration</h5>
+                                <Link to="/userlist">
+                                        <span >Load more </span>
+                                </Link>
                             </div>
                             <div className="pannel-body">
                                 <div className="row">
