@@ -5,10 +5,8 @@ import Popover from '@material-ui/core/Popover';
 import { ReactComponent as PowerOff } from '../assets/power-off.svg'
 import { useSelector } from 'react-redux'
 
-
-
 const Header = ({ showSidebar, sidebar, handleLogout }) => {
-    const user = useSelector(users => users.user)
+    const user = useSelector(users => users.user[0])
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -25,15 +23,14 @@ const Header = ({ showSidebar, sidebar, handleLogout }) => {
 
     return (
         <>
-        {console.log(user[0]?.profilePic)}
             <Navbar className="justify-content-between header-bar" fixed="top ">
                 <div className="navTitle">
                     <Navbar.Brand className="header-brand" >User Management</Navbar.Brand>
                     <ArrowCircle onClick={showSidebar} style={sidebar ? {} : { transform: 'rotateY(180deg)' }} />
                 </div>
                 <NavLink onClick={handleClick} className="header-link">
-                    <img src={`http://localhost:8080/home/user/image/${user[0]?.profilePic}`} alt="header" />
-                    {user[0]?.firstname}
+                    <img src={`http://localhost:8080/home/user/image/${user?.profilePic}`} alt="header" />
+                    {user?.firstname}
                 </NavLink>
                 <Popover
                     id={id}
@@ -51,7 +48,7 @@ const Header = ({ showSidebar, sidebar, handleLogout }) => {
                 >
                     <ul className="unorder-list">
                         <li >Profile</li>
-                        <li onClick={handleLogout}>
+                        <li onClick={()=>handleLogout(user?.id)}>
                             <div className="list">
                                 <PowerOff />
                                 <span >Logout</span>

@@ -2,21 +2,23 @@ import { useEffect, useState } from "react";
 import { isLoggedIn, login, logout, forgetpassword } from "../helpers/authService";
 import { useDispatch } from 'react-redux'
 import { addUser } from './redux'
-
+import apiService from "../helpers/apiService";
 
 export default () => {
 
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const dispatch = useDispatch()
-    const tokenKey = 'user_token';
 
     useEffect(() => {
-        setIsAuthenticated(isLoggedIn());
+        async function fetchUserInfo() {
+
         if (isLoggedIn()) {
-            dispatch(addUser((localStorage.getItem(tokenKey) !== null) ?
-                JSON.parse(localStorage.getItem(tokenKey)).userData :
-                JSON.parse(sessionStorage.getItem(tokenKey)).userData))
+            const userDetails = await apiService.get("home/user/info")
+            dispatch(addUser(userDetails.data.object))
         }
+        setIsAuthenticated(isLoggedIn());
+    }
+    fetchUserInfo();
     }, []);
 
     const handleLogin = async (loginDetails) => {
@@ -24,8 +26,8 @@ export default () => {
         const userDetails = await login(username, password, rememberMe);
         console.log(userDetails)
         if (userDetails?.status === 200) {
+            dispatch(addUser(userDetails.object))
             setIsAuthenticated(true);
-            // dispatch(addUser(userDetails.object.userData))
         }
         return userDetails;
     };
@@ -34,8 +36,8 @@ export default () => {
         await forgetpassword(email)
     }
 
-    const handleLogout = () => {
-        logout();
+    const handleLogout = (id) => {
+        logout(id);
         setIsAuthenticated(false);
     };
 

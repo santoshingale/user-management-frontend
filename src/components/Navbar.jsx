@@ -56,10 +56,12 @@ const Navbar = ({ sidebar, isNavbarFull, halfNavNab, handleLogout }) => {
           </Link>
         </li>
         <li className="nav-text">
-          <div className="list">
-            <IdBadge />
-            <span >Profile</span>
-          </div>
+          <Link to="/profile">
+            <div className="list">
+              <IdBadge />
+              <span >Profile</span>
+            </div>
+          </Link>
         </li>
 
         <li className="nav-text">

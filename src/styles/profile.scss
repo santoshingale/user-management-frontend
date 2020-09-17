@@ -1,0 +1,101 @@
+.profile-body {
+    padding: 0 30px !important;
+
+    h4 {
+        margin: 0 0 10px 0;
+        font-weight: 600;
+    }
+
+    h3 {
+        display: flex;
+        margin: 0;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        font-size: 14px;
+        color: #5e6773;
+
+        span {
+            margin-bottom: 5px;
+        }
+    }
+
+    .profile-left {
+        background-color: #fcfcfc;
+        border: 1px solid #d1d6e6;
+        border-right: none;
+        padding: 0%;
+
+        .profile-pic-div {
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+            width: 100%;
+            background-image: url("https://usermgmt.ittutorials.in/assets/img/profile-bg.jpg");
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            img {
+                width: 100px;
+                object-fit: contain;
+                border-radius: 50%;
+            }
+
+        }
+
+        .profile-info-div {
+            padding: 30px;
+            background-color: #fcfcfc;
+
+            .button-edit-profile {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+
+                Button {
+                    background-color: #00AAFF;
+                }
+            }
+
+        }
+    }
+
+    .profile-right {
+        background-color: white;
+        border: 1px solid #d1d6e6 !important;
+        padding: 20px 25px;
+        border-left: none !important;
+
+        .tab-profile-info {
+            border-bottom: solid #d1d6e6 1px;
+            height: 35px !important;
+            position: relative;
+            margin-bottom: 20px;
+
+            Button {
+                background-color: transparent;
+                border: none;
+                outline: none;
+                font-size: 14px;
+                color: #5e6773;
+                border-radius: 0;
+
+                &:focus {
+                    outline: none;
+                    box-shadow: none;
+                    border-bottom: solid #00AAFF 3px;
+                }
+
+
+            }
+
+            .active-button {
+                border-bottom: solid #00AAFF 3px;
+                color: #00AAFF;
+            }
+        }
+
+        .profile-details {}
+    }
+}

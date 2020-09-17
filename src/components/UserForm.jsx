@@ -59,7 +59,10 @@ const UserForm = ({ permissions, setPermissions, initialValues, dateOfBirth, set
     return (
         <>
             <Formik initialValues={initialValues}
-                onSubmit={handleSubmit}
+                onSubmit={(values,{resetForm})=>{
+                    handleSubmit(values);
+                    resetForm({values:initialValues})
+                }}
                 validationSchema={formSchema}>
                 {
                     (props) => {

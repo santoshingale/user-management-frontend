@@ -161,6 +161,41 @@
         align-items: center;
         min-width: 320px;
         margin: 0 -10px 30px -10px;
+
+        .first-div-holder {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+
+            a {
+                display: flex;
+                align-items: center;
+                font-size: 14px;
+                font-weight: 300;
+                color: #0E9BE2;
+
+                svg {
+                    height: 14px;
+                    width: 14px;
+
+                    fill {
+                        background-color: #0E9BE2;
+                    }
+                }
+
+                &:hover{
+                    color: #23546e;
+                }
+
+            }
+            h3 {
+                margin: 0%;
+                font-size: 14px;
+                font-weight: 300;
+                color: #9faeb6;
+                
+            }
+        }
     }
 }
 
@@ -417,6 +452,7 @@
 
 .last-login-header {
     margin: 0;
+    display: inline;
     font-size: 14px;
     font-weight: 300;
     color: #a0aeba;

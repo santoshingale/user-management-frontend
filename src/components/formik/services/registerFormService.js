@@ -2,9 +2,9 @@ import { object, string } from "yup";
 import registerRegex from './registerPattern.json'
 
 export const initialValues = {
-    firstname: 'santosh',
-    middlename: 'Dilip',
-    lastname: 'Ingale',
+    firstname: '',
+    middlename: '',
+    lastname: '',
     gender: 'Male',
     country: 'India',
     phone: '',
@@ -12,7 +12,7 @@ export const initialValues = {
     email: '',
     address: '',
     username: '',
-    password: 'Si@12345',
+    password: '',
     confirmpassword: '',
     role: 'User'
 };

@@ -88,7 +88,7 @@ function Chart({ casesType }) {
     const [horizontalChartData, setHorizontalChartData] = useState()
     const [topLocation, setTopLocation] = useState()
     const [topLocationData, setTopLocationData] = useState()
-    const [chartTimeLime, setChartTimeLime] = useState()
+    const [chartTimeLime, setChartTimeLime] = useState("2020")
     let _ageGroup = [0, 0, 0, 0, 0, 0, 0]
     let _counter = {}
     let _userRatioByGender = { Male: 0, Female: 0 }
@@ -101,13 +101,11 @@ function Chart({ casesType }) {
         let bindedChartData = [];
         let LastDataPoint = 0
         for (let date in data) {
-            if (LastDataPoint) {
                 let newDataPoint = {
                     x: date,
                     y: data[date]
                 }
                 bindedChartData.push(newDataPoint);
-            }
             LastDataPoint = data[date];
         }
         return bindedChartData
@@ -116,43 +114,45 @@ function Chart({ casesType }) {
     useEffect(() => {
         async function fetchStatus() {
 
-            const resp = await (await apiService.get("/home/dashboard")).data
+            const resp = await (await apiService.get("/home/dashboard/chart")).data.object
 
             await resp.forEach(function (obj) {
 
-                var key1 = moment(obj.registrationDate).format('MM/01/YYYY')
-                _counter[key1] = (_counter[key1] || 0) + 1
+                if (chartTimeLime == moment(obj.registrationDate).format('YYYY') || chartTimeLime == moment(obj.registrationDate).format('MM')) {
+                    var key1 = moment(obj.registrationDate).format('MM/01/YYYY')
+                    _counter[key1] = (_counter[key1] || 0) + 1
 
-                var key2 = obj.gender
-                _userRatioByGender[key2] = (_userRatioByGender[key2] || 0) + 1
+                    var key2 = obj.gender
+                    _userRatioByGender[key2] = (_userRatioByGender[key2] || 0) + 1
 
-                var key3 = obj.country
-                _topLocation[key3] = (_topLocation[key3] || 0) + 1
+                    var key3 = obj.country
+                    _topLocation[key3] = (_topLocation[key3] || 0) + 1
 
 
-                var key = moment(new Date()).format('YYYY') - moment(obj.dateOfBirth).format('YYYY')
-                if (key <= 18) {
-                    _ageGroup[0] = parseInt(_ageGroup[0]) + 1
-                }
-                else if (key > 18 && key <= 22) {
-                    _ageGroup[1] = parseInt(_ageGroup[1]) + 1
-                }
-                else if (key > 22 && key <= 27) {
-                    _ageGroup[2] = parseInt(_ageGroup[2]) + 1
-                }
-                else if (key > 27 && key <= 32) {
-                    _ageGroup[3] = parseInt(_ageGroup[3]) + 1
-                }
-                else if (key > 32 && key <= 37) {
-                    _ageGroup[4] = parseInt(_ageGroup[4]) + 1
-                }
-                else if (key > 37 && key <= 42) {
-                    _ageGroup[5] = parseInt(_ageGroup[5]) + 1
-                }
-                else if (key > 42) {
-                    _ageGroup[6] = parseInt(_ageGroup[6]) + 1
-                }
+                    var key = moment(new Date()).format('YYYY') - moment(obj.dateOfBirth).format('YYYY')
+                    if (key <= 18) {
+                        _ageGroup[0] = parseInt(_ageGroup[0]) + 1
+                    }
+                    else if (key > 18 && key <= 22) {
+                        _ageGroup[1] = parseInt(_ageGroup[1]) + 1
+                    }
+                    else if (key > 22 && key <= 27) {
+                        _ageGroup[2] = parseInt(_ageGroup[2]) + 1
+                    }
+                    else if (key > 27 && key <= 32) {
+                        _ageGroup[3] = parseInt(_ageGroup[3]) + 1
+                    }
+                    else if (key > 32 && key <= 37) {
+                        _ageGroup[4] = parseInt(_ageGroup[4]) + 1
+                    }
+                    else if (key > 37 && key <= 42) {
+                        _ageGroup[5] = parseInt(_ageGroup[5]) + 1
+                    }
+                    else if (key > 42) {
+                        _ageGroup[6] = parseInt(_ageGroup[6]) + 1
+                    }
 
+                }
             })
             setAgeGroup(_ageGroup)
             setTopLocationData(_topLocation)
@@ -161,7 +161,7 @@ function Chart({ casesType }) {
             await setUserRationByGender(_userRatioByGender)
         }
         fetchStatus();
-    }, [])
+    }, [chartTimeLime])
 
     const state = {
         labels: ['Under 18', '18 - 22', '23 - 27', '28 - 32', '33 - 37', '38 - 42', 'Over 42'],
@@ -182,9 +182,9 @@ function Chart({ casesType }) {
         <>
             <div className="col-lg-8 col-md-8 col-sm-12 col-12 line-graph-holder">
                 <div className="chart-button-holder">
-                    <Button >All time</Button>
-                    <Button >2020 </Button>
-                    <Button >September</Button>
+                    <Button onClick={() => setChartTimeLime("2020")}>All time</Button>
+                    <Button onClick={() => setChartTimeLime("2020")}>2020 </Button>
+                    <Button onClick={() => setChartTimeLime("09")}>September</Button>
                 </div>
                 {chartData?.length > 0 &&
                     <Line data={{

@@ -44,13 +44,13 @@ export const authHeaderMultiPart = () => {
 
 export const login = async (username, password, rememberMe) => {
 
-    const response = await apiService.post('login',{
+    const response = await apiService.post('login', {
         email: username,
         password: password
     }).then((res) => {
         rememberMe ?
-            localStorage.setItem(tokenKey, JSON.stringify(res.data.object)) :
-            sessionStorage.setItem(tokenKey, JSON.stringify(res.data.object))
+            localStorage.setItem(tokenKey, res.data.object.token) :
+            sessionStorage.setItem(tokenKey, res.data.object.token);
         return res.data;
     }).catch((error) => {
         if (error.response) {
@@ -72,8 +72,9 @@ export const isLoggedIn = () => {
     return localStorage.getItem(tokenKey) !== null || sessionStorage.getItem(tokenKey) !== null;
 }
 
-export const logout = () => {
+export const logout = (id) => {
     localStorage.removeItem(tokenKey);
     sessionStorage.removeItem(tokenKey);
+    apiService.post(`/home/user/logout?id=${id}`)
 };
 

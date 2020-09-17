@@ -1,10 +1,12 @@
 // noinspection ES6CheckImport
-import { Redirect, Route } from "react-router-dom";
+import { Redirect, Route, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import React, { useState } from 'react'
 import Header from './Header'
 import Navbar from './Navbar';
 import '../styles/navbar.scss'
+import { ReactComponent as Home } from '../assets/home.svg'
+
 
 const ProtectedRoute = ({ component: Component, handleLogout, componentName, isAuthenticated, ...rest }) => {
 
@@ -43,8 +45,15 @@ const ProtectedRoute = ({ component: Component, handleLogout, componentName, isA
 
                 <div className="container-fluid">
                     <div className=" first-div">
-                        <div className="col-md-12">
+                        <div className="col-md-6 col-lg-6">
                             <h5>{componentName}</h5>
+                        </div>
+                        <div className=" col-md-6 col-lg-6 first-div-holder">
+                            <Link to="/dashboard">
+                                <Home />
+                                Home
+                            </Link>
+                            <h3 > / Dashoboard </h3>
                         </div>
                     </div>
 

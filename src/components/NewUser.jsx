@@ -46,7 +46,7 @@ const NewUser = () => {
         let payload = { ...props, ...permissions,dateOfBirth: dateOfBirth }
         payload = { ...payload,  }
         delete payload.confirmpassword
-        const path = "home/register";
+        const path = "home/user/register";
         const formData = new FormData();
         console.log(profilePic)
         console.log(payload)

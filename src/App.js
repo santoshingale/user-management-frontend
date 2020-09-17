@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './styles/App.scss';
 import Login from './components/LoginPage'
 import ForgetPaaword from './components/ForgetPaaword'
+import Profile from './components/Profile'
 import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import useAuth from './components/useAuth'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -40,11 +41,14 @@ function App() {
     <Router>
       <Switch>
         <Redirect path="/" exact to="dashboard" />
-        <ProtectedRoute exact path="/dashboard" component={Dashboard} isAuthenticated={isAuthenticated} handleLogout={handleLogout} 
-        componentName={[<div style={{ display: 'flex', flexDirection: 'column' }}><h3 className="welcome-header">Welcome {user[0]?.firstname}</h3><h4 className="last-login-header">You last logged in on  {user[0]?.lastLogin}</h4></div>]} />
+        <ProtectedRoute exact path="/dashboard" component={Dashboard} isAuthenticated={isAuthenticated} handleLogout={handleLogout}
+          componentName={[<div style={{ display: 'flex', flexDirection: 'column' }}><h3 className="welcome-header">Welcome {user[0]?.firstname}</h3><h4 className="last-login-header">You last logged in on  {user[0]?.lastLogin}</h4></div>]} />
         <ProtectedRoute exact path="/adduser" component={NewUser} isAuthenticated={isAuthenticated} handleLogout={handleLogout} componentName="New user" />
         <ProtectedRoute exact path="/userlist" component={UserList} isAuthenticated={isAuthenticated} handleLogout={handleLogout} componentName="Users" />
         <ProtectedRoute exact path="/updateuser" component={UpdateUserDetails} isAuthenticated={isAuthenticated} handleLogout={handleLogout} componentName="Users" />
+        <ProtectedRoute exact path="/profile" component={Profile} isAuthenticated={isAuthenticated} handleLogout={handleLogout}
+          componentName={[<div style={{ display: 'flex', flexDirection: 'column' }}><h3 className="welcome-header">Profile</h3><h4 className="last-login-header">You last logged in on  {user[0]?.lastLogin}</h4></div>]} />
+                />
         {/* <ProtectedRoute exact path="/home" component={Dashboard} isAuthenticated={isAuthenticated} /> */}
 
         <Route exact path="/login"
