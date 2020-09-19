@@ -214,6 +214,10 @@ $primary: #2B333E;
 }
 
 .unorder-list {
+	a{
+		text-decoration: none;
+		color: black;
+	}
 	li {
 		width: 200px;
 		height: 45px;

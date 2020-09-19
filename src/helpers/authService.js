@@ -21,7 +21,6 @@ export const authHeader = () => {
     }
 }
 
-
 export const authHeaderMultiPart = () => {
 
     if (localStorage.getItem('user_token') !== null) {

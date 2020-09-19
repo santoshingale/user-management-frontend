@@ -6,9 +6,10 @@ import { FormikTextField, FormikTextarea, FormikSelect } from "./formik";
 import { formSchema } from "./formik/services/registerFormService";
 import axios from 'axios'
 import Button from 'react-bootstrap/Button';
+import { useLocation } from 'react-router-dom';
 
 const UserForm = ({ permissions, setPermissions, initialValues, dateOfBirth, setDateOfBirth, handleSubmit,
-    profilePic, setProfilePic,setIsProfilePicChange }) => {
+    profilePic, setProfilePic, isProfilePicChange, setIsProfilePicChange }) => {
 
     useEffect(() => {
         axios.get('https://disease.sh/v3/covid-19/countries')
@@ -22,6 +23,7 @@ const UserForm = ({ permissions, setPermissions, initialValues, dateOfBirth, set
 
     const [selector, setSelector] = useState({ add: false, modify: false, delete: false, read: false })
     const [countries, setCountries] = useState([]);
+    const location = useLocation()
 
 
     const handleChange = (event) => {
@@ -59,9 +61,9 @@ const UserForm = ({ permissions, setPermissions, initialValues, dateOfBirth, set
     return (
         <>
             <Formik initialValues={initialValues}
-                onSubmit={(values,{resetForm})=>{
+                onSubmit={(values, { resetForm }) => {
                     handleSubmit(values);
-                    resetForm({values:initialValues})
+                    resetForm({ values: initialValues })
                 }}
                 validationSchema={formSchema}>
                 {
@@ -212,32 +214,44 @@ const UserForm = ({ permissions, setPermissions, initialValues, dateOfBirth, set
                                         </div>
                                     </div>
 
-
                                     <div className="col-sm-12 col-md-12 col-lg-4 ">
-                                        <div className="container background-white margin-20px padding-20px" >
-                                            <h4 style={{ marginBottom: "30px" }}>Photo</h4>
-                                            <label className="control-label">Acceptable image formats are jpg, jpeg, png &amp; gif.</label>
-                                            <label className="control-label">Maximum image size allowed is 2MB.</label>
 
+                                        {location.pathname === '/adduser' ?
+                                            <div className="container background-white margin-20px padding-20px" >
+                                                <h4 style={{ marginBottom: "30px" }}>Photo</h4>
+                                                <label className="control-label">Acceptable image formats are jpg, jpeg, png &amp; gif.</label>
+                                                <label className="control-label">Maximum image size allowed is 2MB.</label>
 
+                                                <label htmlFor="file-upload" className="custom-file-upload"
+                                                    style={isProfilePicChange === '' ? {} : { background: `${profilePic}` }}>
+                                                    <img src={UploadImage} alt="" />
+                                                    <p>click here to choose any image</p>
+                                                </label>
 
+                                                < input
+                                                    id="file-upload"
+                                                    type="file"
+                                                    name="profilePic"
+                                                    onChange={(e) => setProfilePic(e.target.files[0], setIsProfilePicChange(true))}
+                                                />
+                                            </div>
+                                            :
+                                            <div className="container background-white margin-20px padding-20px" >
+                                                <h4 style={{ marginBottom: "30px" }}>Photo</h4>
 
-                                            <label htmlFor="file-upload" className="custom-file-upload"
-                                                style={profilePic === '' ? {} : { background: `${profilePic}` }}>
-                                                <img src={UploadImage} alt="" />
-                                                <p>click here to choose any image</p>
-                                            </label>
+                                                <label className="custom-file-upload">
 
+                                                    {isProfilePicChange ? <img src={URL.createObjectURL(profilePic)} alt="" /> : <img src={`http://localhost:8080/home/user/image/${initialValues.profilePic}`} alt="header" />
+                                                    } </label>
 
-
-
-                                            < input
-                                                id="file-upload"
-                                                type="file"
-                                                name="profilePic"
-                                                onChange={(e) => setProfilePic(e.target.files[0],setIsProfilePicChange(true))}
-                                            />
-                                        </div>
+                                                < input
+                                                    // id="file-upload"
+                                                    style={{ display: "block" }}
+                                                    type="file"
+                                                    name="profilePic"
+                                                    onChange={(e) => setProfilePic(e.target.files[0], setIsProfilePicChange(true))}
+                                                />
+                                            </div>}
                                     </div>
                                 </div>
                                 <div className="col-md-12 col-lg-12" style={{ marginRight: "-25px" }}>

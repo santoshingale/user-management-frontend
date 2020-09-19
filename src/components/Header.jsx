@@ -4,9 +4,10 @@ import { ReactComponent as ArrowCircle } from '../assets/arrow-circle-right.svg'
 import Popover from '@material-ui/core/Popover';
 import { ReactComponent as PowerOff } from '../assets/power-off.svg'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom';
 
 const Header = ({ showSidebar, sidebar, handleLogout }) => {
-    const user = useSelector(users => users.user[0])
+    const user = useSelector(users => users.user)
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -47,8 +48,10 @@ const Header = ({ showSidebar, sidebar, handleLogout }) => {
                     }}
                 >
                     <ul className="unorder-list">
-                        <li >Profile</li>
-                        <li onClick={()=>handleLogout(user?.id)}>
+                        <Link to="/profile">
+                            <li >Profile</li>
+                        </Link>
+                        <li onClick={() => handleLogout(user?.id)}>
                             <div className="list">
                                 <PowerOff />
                                 <span >Logout</span>

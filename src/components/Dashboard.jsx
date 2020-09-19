@@ -1,22 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import gsap from 'gsap'
 import apiService from '../helpers/apiService';
 import StatusBar from './StatusBar';
 import Chart from './Chart';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 
-let tl = gsap.timeline();
 
-// const homePageAnimation = () => {
-//     tl.from(".rounded-avtar", 0.3,
-//         {
-//             scale: 1.05,
-//             ease: "expo.inout",
-//             yoyo: true,
-//             repeat: 3
-//         })
-// }
 const Dashboard = () => {
 
     const [usersList, setUsersList] = useState([])
@@ -67,7 +56,7 @@ const Dashboard = () => {
                                                     const userPic = `http://localhost:8080/home/user/image/${user.profilePic}`
 
                                                     return < tr >
-                                                        <td>
+                                                        <td key={user.id}>
                                                             <div className="table-data">
                                                                 <img src={userPic} alt="pic" className="user-picture" />
                                                                 <div className="name-registration">

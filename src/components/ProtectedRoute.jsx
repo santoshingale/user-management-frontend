@@ -53,7 +53,7 @@ const ProtectedRoute = ({ component: Component, handleLogout, componentName, isA
                                 <Home />
                                 Home
                             </Link>
-                            <h3 > / Dashoboard </h3>
+                            <h3 > {rest.location.pathname} </h3>
                         </div>
                     </div>
 

@@ -11,22 +11,19 @@ export default () => {
 
     useEffect(() => {
         async function fetchUserInfo() {
-
-        if (isLoggedIn()) {
-            const userDetails = await apiService.get("home/user/info")
-            dispatch(addUser(userDetails.data.object))
+            if (isLoggedIn()) {
+                const userDetails = await apiService.get("home/user/info")
+                dispatch(addUser(userDetails.data.object))
+            }
+            setIsAuthenticated(isLoggedIn());
         }
-        setIsAuthenticated(isLoggedIn());
-    }
-    fetchUserInfo();
-    }, []);
+        fetchUserInfo();
+    }, [dispatch,isAuthenticated]);
 
     const handleLogin = async (loginDetails) => {
         const { username, password, rememberMe } = loginDetails;
         const userDetails = await login(username, password, rememberMe);
-        console.log(userDetails)
         if (userDetails?.status === 200) {
-            dispatch(addUser(userDetails.object))
             setIsAuthenticated(true);
         }
         return userDetails;

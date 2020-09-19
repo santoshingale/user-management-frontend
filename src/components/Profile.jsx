@@ -2,22 +2,19 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
-// import { ReactComponent as back } from '../assets/settings.svg'
-
-
+import { ReactComponent as Time } from '../assets/time.svg'
+import Moment from 'react-moment';
 
 const Profile = () => {
-    const user = useSelector(users => users.user[0])
+    const user = useSelector(users => users.user)
     const [generalInfo, setGeneralInfo] = useState(true)
-    // const height = document.getElementsByClassName('profile-pic-div');
-
 
     return (
         <div className="col-lg-12 profile-body">
             <div className="row">
                 <div className="col-lg-4 col-md-12 profile-left">
                     <div className="profile-pic-div">
-                        <img src={`http://localhost:8080/home/user/image/${user?.profilePic}`} alt="profile picture" />
+                        <img src={`http://localhost:8080/home/user/image/${user?.profilePic}`} alt="profile" />
                         <h4 style={{ color: "white" }}>{user?.firstname}  {user?.lastname}</h4>
                     </div>
                     <div className="profile-info-div">
@@ -51,7 +48,7 @@ const Profile = () => {
                         <Button className={generalInfo ? "active-button" : " "} onClick={() => setGeneralInfo(true)}>General Information</Button>
                         <Button className={generalInfo ? "" : "active-button"} onClick={() => setGeneralInfo(false)}>Login History</Button>
                     </div>
-                    <div className="profile-details">
+                    {generalInfo ? <div className="profile-details">
                         <h3>
                             <span> First name: </span> <span>{user?.firstname}</span>
                         </h3>
@@ -77,7 +74,18 @@ const Profile = () => {
                         <h3>
                             <span> Address </span> <span>{user?.address}</span>
                         </h3>
-                    </div>
+                    </div> :
+                        <div className="profile-details">
+                            <h3>
+                                <span style={{ fontStyle: 'italic' }}> <Time />  Login history is displayed prior to the last login </span>
+                            </h3>
+
+                            {user?.lastLogin?.slice(0).reverse().map((loginHistory) => <h3>
+                                <span> {'>'} <Moment format="MMM DD YYYY h:mm:ss A">
+                                {loginHistory["loginTime"]}
+                                </Moment> </span>
+                            </h3>)}
+                        </div>}
                 </div>
             </div>
         </div>

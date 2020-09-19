@@ -81,11 +81,8 @@ const options = {
 
 function Chart({ casesType }) {
 
-    const [days] = useState(30)
     const [chartData, setChartData] = useState()
-    const [temp, setTemp] = useState([])
     const [ageGroup, setAgeGroup] = useState()
-    const [horizontalChartData, setHorizontalChartData] = useState()
     const [topLocation, setTopLocation] = useState()
     const [topLocationData, setTopLocationData] = useState()
     const [chartTimeLime, setChartTimeLime] = useState("2020")
@@ -99,14 +96,12 @@ function Chart({ casesType }) {
 
     const bindChartData = (data) => {
         let bindedChartData = [];
-        let LastDataPoint = 0
         for (let date in data) {
-                let newDataPoint = {
-                    x: date,
-                    y: data[date]
-                }
-                bindedChartData.push(newDataPoint);
-            LastDataPoint = data[date];
+            let newDataPoint = {
+                x: date,
+                y: data[date]
+            }
+            bindedChartData.push(newDataPoint);
         }
         return bindedChartData
     }
@@ -118,7 +113,7 @@ function Chart({ casesType }) {
 
             await resp.forEach(function (obj) {
 
-                if (chartTimeLime == moment(obj.registrationDate).format('YYYY') || chartTimeLime == moment(obj.registrationDate).format('MM')) {
+                if (chartTimeLime === moment(obj.registrationDate).format('YYYY') || chartTimeLime === moment(obj.registrationDate).format('MM')) {
                     var key1 = moment(obj.registrationDate).format('MM/01/YYYY')
                     _counter[key1] = (_counter[key1] || 0) + 1
 
@@ -162,21 +157,6 @@ function Chart({ casesType }) {
         }
         fetchStatus();
     }, [chartTimeLime])
-
-    const state = {
-        labels: ['Under 18', '18 - 22', '23 - 27', '28 - 32', '33 - 37', '38 - 42', 'Over 42'],
-        datasets: [
-            {
-                backgroundColor: '#F3BB23',
-                borderColor: 'rgba(255,99,132,1)',
-                borderWidth: 0,
-                hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-                hoverBorderColor: 'rgba(255,99,132,1)',
-                data: _ageGroup,
-                height: '50px'
-            }
-        ]
-    }
 
     return (
         <>

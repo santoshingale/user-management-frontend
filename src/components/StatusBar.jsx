@@ -1,7 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { ReactComponent as User } from '../assets/user.svg'
 import gsap from 'gsap'
-import apiService from '../helpers/apiService';
+import apiService from '../helpers/apiService'
+
+// let tl = gsap.timeline();
+
+// const homePageAnimation = () => {
+//     tl.from(".rounded-avtar", 0.3,
+//         {
+//             scale: 1.05,
+//             ease: "expo.inout",
+//             yoyo: true,
+//             repeat: 3
+//         })
+// }
 
 const StatusBar = () => {
 

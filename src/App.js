@@ -19,7 +19,7 @@ function Alert(props) {
 }
 
 function App() {
-  const user = useSelector(users => users.user)
+  const user = useSelector(users => users?.user)
   const { isAuthenticated, handleLogin, handleReset, handleLogout } = useAuth();
   const [userDetails, setUserDetails] = useState({})
   const [open, setOpen] = useState(false);
@@ -33,23 +33,27 @@ function App() {
     if (reason === 'clickaway') {
       return;
     }
-    setUserDetails({})
     setOpen(false);
+    setUserDetails({})
   };
+
+  let lastLogin = (user === undefined || user ===null || user.lastLogin ===undefined) ? '' : user.lastLogin[user.lastLogin.length - 1]["loginTime"];
 
   return (
     <Router>
       <Switch>
         <Redirect path="/" exact to="dashboard" />
         <ProtectedRoute exact path="/dashboard" component={Dashboard} isAuthenticated={isAuthenticated} handleLogout={handleLogout}
-          componentName={[<div style={{ display: 'flex', flexDirection: 'column' }}><h3 className="welcome-header">Welcome {user[0]?.firstname}</h3><h4 className="last-login-header">You last logged in on  {user[0]?.lastLogin}</h4></div>]} />
+          componentName={[<div style={{ display: 'flex', flexDirection: 'column' }}><h3 className="welcome-header">Welcome {user?.firstname}</h3><h4 className="last-login-header">You last logged in on {lastLogin} </h4></div>]} />
+
         <ProtectedRoute exact path="/adduser" component={NewUser} isAuthenticated={isAuthenticated} handleLogout={handleLogout} componentName="New user" />
+
         <ProtectedRoute exact path="/userlist" component={UserList} isAuthenticated={isAuthenticated} handleLogout={handleLogout} componentName="Users" />
+
         <ProtectedRoute exact path="/updateuser" component={UpdateUserDetails} isAuthenticated={isAuthenticated} handleLogout={handleLogout} componentName="Users" />
+
         <ProtectedRoute exact path="/profile" component={Profile} isAuthenticated={isAuthenticated} handleLogout={handleLogout}
-          componentName={[<div style={{ display: 'flex', flexDirection: 'column' }}><h3 className="welcome-header">Profile</h3><h4 className="last-login-header">You last logged in on  {user[0]?.lastLogin}</h4></div>]} />
-                />
-        {/* <ProtectedRoute exact path="/home" component={Dashboard} isAuthenticated={isAuthenticated} /> */}
+          componentName={[<div style={{ display: 'flex', flexDirection: 'column' }}><h3 className="welcome-header">Profile</h3><h4 className="last-login-header">You last logged in on  {lastLogin}</h4></div>]} />/>
 
         <Route exact path="/login"
           component={(props) => <Login isAuthenticated={isAuthenticated}

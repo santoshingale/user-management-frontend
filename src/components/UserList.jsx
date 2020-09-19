@@ -101,7 +101,7 @@ const UserList = () => {
 
                             {usersList.map((user) => {
                                 const userPic = `http://localhost:8080/home/user/image/${user.profilePic}`
-                                return <tr>
+                                return <tr key={user.id}>
                                     <td style={{ textAlign: "center", padding: '5px 2px' }}><img src={userPic} alt="" style={{ height: '40px', objectFit: 'cover' }} /></td>
                                     <td>{user.firstname} {user.middlename} {user.lastname}</td>
                                     <td>{user.email}</td>

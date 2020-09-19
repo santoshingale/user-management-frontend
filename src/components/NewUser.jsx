@@ -48,8 +48,6 @@ const NewUser = () => {
         delete payload.confirmpassword
         const path = "home/user/register";
         const formData = new FormData();
-        console.log(profilePic)
-        console.log(payload)
         formData.append('register', new Blob([JSON.stringify(payload)],{type: "application/json"}))
         formData.append('profilePic', profilePic);
         const resp = await apiService.postMultipart(path, formData)
