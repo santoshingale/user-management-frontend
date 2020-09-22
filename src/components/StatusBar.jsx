@@ -22,13 +22,26 @@ const StatusBar = () => {
     const [totalUsers, setTotalUsers] = useState(0)
     const [onlineUsers, setOnlineUsers] = useState(0)
     useEffect(() => {
+        let mount = true;
+
         async function fetchStatus() {
-            await setTotalUsers(await (await apiService.get("/home/user/count")).data.object)
-            await setActiveUsers(await (await apiService.get("home/dashboard?status=active")).data.object)
-            await setInactiveUsers(await (await apiService.get("home/dashboard?status=inactive")).data.object)
-            await setOnlineUsers(await (await apiService.get("home/dashboard/online")).data.object)
+
+            const _count = await apiService.get("/home/user/count");
+            const _active = await apiService.get("home/dashboard?status=active");
+            const _inactive = await apiService.get("home/dashboard?status=inactive");
+            const _online = await apiService.get("home/dashboard/online");
+
+            if (mount) {
+                setTotalUsers(_count.data.object);
+                setActiveUsers(_active.data.object);
+                setInactiveUsers(_inactive.data.object);
+                setOnlineUsers(_online.data.object);
+            }
         }
         fetchStatus();
+        return () => {
+            mount = false;
+        }
     }, [])
 
     return (
@@ -92,7 +105,7 @@ const StatusBar = () => {
                         </span>
                         <span className="value-avtar">
                             {onlineUsers}
-                                </span>
+                        </span>
                     </div>
                 </div>
             </div>

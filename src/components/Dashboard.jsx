@@ -2,20 +2,20 @@ import React, { useState, useEffect } from 'react'
 import apiService from '../helpers/apiService';
 import StatusBar from './StatusBar';
 import Chart from './Chart';
-import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
-
 
 const Dashboard = () => {
 
     const [usersList, setUsersList] = useState([])
 
     useEffect(() => {
+        let mounted = true;
         async function fetchList() {
-            const list = await apiService.get('home/user/recent-registration')
-            setUsersList(list.data.object)
+            const list = await apiService.get('home/user/recent-registration');
+            if (mounted) { setUsersList(list.data.object) }
         }
         fetchList();
+        return ()=> {mounted = false}
     }, [])
 
 
@@ -43,7 +43,7 @@ const Dashboard = () => {
                             <div className="pannel-holding">
                                 <h5 className="heading-dashboard">Latest Registration</h5>
                                 <Link to="/userlist">
-                                        <span >Load more </span>
+                                    <span >Load more </span>
                                 </Link>
                             </div>
                             <div className="pannel-body">
@@ -55,8 +55,8 @@ const Dashboard = () => {
                                                 {usersList.map((user) => {
                                                     const userPic = `http://localhost:8080/home/user/image/${user.profilePic}`
 
-                                                    return < tr >
-                                                        <td key={user.id}>
+                                                    return < tr key={user.id}>
+                                                        <td >
                                                             <div className="table-data">
                                                                 <img src={userPic} alt="pic" className="user-picture" />
                                                                 <div className="name-registration">
@@ -64,9 +64,6 @@ const Dashboard = () => {
                                                                         {user.firstname} {user.middlename} {user.lastname}
                                                                     </h4>
                                                                     <h4 className="heading-list-time">
-                                                                        <Moment format="MMM DD YYYY h:mm A">
-                                                                            {user.registrationDate}
-                                                                        </Moment>
                                                                     </h4>
                                                                 </div>
                                                             </div>

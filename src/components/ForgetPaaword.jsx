@@ -41,7 +41,7 @@ const ForgetPaaword = ({ handleReset, isAuthenticated }) => {
                         registered email.
                     </Alert>
                     <input type="text" id="username" name="fname" placeholder="Email"
-                        class="form-control" aria-describedby="emailHelp"
+                        className="form-control" aria-describedby="emailHelp"
                         onBlur={(input) => setLoginDetails(input.target.value)} />
                     {error === true ? <p >Email is required.</p> : <></>}
                     <Button variant="primary" size="lg" block onClick={() => handleSubmit()}>

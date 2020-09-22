@@ -14,6 +14,7 @@ import Button from 'react-bootstrap/Button';
 const Navbar = ({ sidebar, isNavbarFull, halfNavNab, handleLogout }) => {
 
   const [userTab, setUserTab] = useState(false)
+  const [webpgeTab, setWebpageTab] = useState(false)
 
   return (
     <nav id='sidebar' className={sidebar ? 'hideSidebar' : isNavbarFull ? '' : 'active'}>
@@ -27,11 +28,35 @@ const Navbar = ({ sidebar, isNavbarFull, halfNavNab, handleLogout }) => {
           </li>
         </Link>
 
-        <li className="nav-text">
+        <li className="nav-text" onClick={() => setWebpageTab(!webpgeTab)}>
           <div className="list">
             <Files />
             <span>Webpages <img src={angleLeft} alt="" /></span>
           </div>
+        </li>
+       
+        <li className="" style={webpgeTab ? {} : { display: 'none' }}>
+          <Link to="/webpage1">
+            <div className="list">
+              <span >Webpage1 </span>
+            </div>
+          </Link>
+        </li>
+
+        <li className="" style={webpgeTab ? {} : { display: 'none' }}>
+          <Link to="/webpage2">
+            <div className="list">
+              <span >Webpage 2 </span>
+            </div>
+          </Link>
+        </li>
+
+        <li className="" style={webpgeTab ? {} : { display: 'none' }}>
+          <Link to="/webpage3">
+            <div className="list">
+              <span >Webpage 3 </span>
+            </div>
+          </Link>
         </li>
 
         <li className="nav-text" onClick={() => setUserTab(!userTab)}>

@@ -8,9 +8,9 @@ import '../styles/navbar.scss'
 import { ReactComponent as Home } from '../assets/home.svg'
 
 
-const ProtectedRoute = ({ component: Component, handleLogout, componentName, isAuthenticated, ...rest }) => {
+const ProtectedRoute = ({ component: Component, handleLogout, key, componentName, isAuthenticated, ...rest }) => {
 
-    const [sidebar, setSidebar] = useState(true);
+    const [sidebar, setSidebar] = useState(false);
 
     const showSidebar = () => setSidebar(!sidebar);
 
@@ -37,7 +37,7 @@ const ProtectedRoute = ({ component: Component, handleLogout, componentName, isA
 
     return (
 
-        <div className="dashboard">
+        <div className="dashboard" >
             <div className="wrapper d-flex align-items-stretch">
                 <Header showSidebar={showSidebar} sidebar={sidebar} handleLogout={handleLogout} />
 

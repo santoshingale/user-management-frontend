@@ -4,25 +4,25 @@ import UploadImage from '../assets/upload-image.png'
 import { Form, Formik } from "formik";
 import { FormikTextField, FormikTextarea, FormikSelect } from "./formik";
 import { formSchema } from "./formik/services/registerFormService";
-import axios from 'axios'
 import Button from 'react-bootstrap/Button';
 import { useLocation } from 'react-router-dom';
+import Axios from 'axios';
 
 const UserForm = ({ permissions, setPermissions, initialValues, dateOfBirth, setDateOfBirth, handleSubmit,
-    profilePic, setProfilePic, isProfilePicChange, setIsProfilePicChange }) => {
+    profilePic, setProfilePic, isProfilePicChange, setIsProfilePicChange, status, handleStatus }) => {
 
     useEffect(() => {
-        axios.get('https://disease.sh/v3/covid-19/countries')
-            .then(res => {
-                const countries = res.data.map((country) => ({
-                    value: country.country,
-                }));
-                setCountries(countries)
-            })
+        async function fetchCountries() {
+            const _countries = await Axios.get('https://disease.sh/v3/covid-19/countries')
+            setCountries(_countries.data.map((country) => ({
+                value: country.country
+            })))
+        }
+        fetchCountries();
     }, [])
 
     const [selector, setSelector] = useState({ add: false, modify: false, delete: false, read: false })
-    const [countries, setCountries] = useState([]);
+    const [countries, setCountries] = useState([{ value: "India" }]);
     const location = useLocation()
 
 
@@ -46,15 +46,14 @@ const UserForm = ({ permissions, setPermissions, initialValues, dateOfBirth, set
         var _role = e.options[e.selectedIndex].value;
         const role = (_role === 'Admin') ? true : false;
 
-
         Object.keys(selector).map((value) => {
             let key = value.toString();
-            setSelector(prevState => ({ ...prevState, [key]: role }))
+            return (setSelector(prevState => ({ ...prevState, [key]: role })))
         })
 
         Object.keys(permissions).map((value) => {
             let key = value.toString();
-            setPermissions(prevState => ({ ...prevState, [key]: role }))
+            return (setPermissions(prevState => ({ ...prevState, [key]: role })))
         })
     }
 
@@ -124,17 +123,18 @@ const UserForm = ({ permissions, setPermissions, initialValues, dateOfBirth, set
                                                 <div className="form-group col-md-4">
                                                     <FormikSelect name="gender"
                                                         label="Gender"
-                                                        options={[{ value: "Male", display: "Male" },
-                                                        { value: "Female", display: "Female" }]} />
+                                                        selectedValue={initialValues.gender}
+                                                        options={[{ value: "Male" },
+                                                        { value: "Female" }]} />
                                                 </div>
 
                                                 <div className="form-group col-md-4">
                                                     <FormikSelect name="country"
                                                         label="Country"
-                                                        id="country" options={countries} selectedValue={initialValues.country} />
+                                                        selectedValue={initialValues.country}
+                                                        options={countries} />
                                                 </div>
                                             </div>
-
                                             <div className="form-row">
 
                                                 <div className="form-group col-md-4">
@@ -206,10 +206,25 @@ const UserForm = ({ permissions, setPermissions, initialValues, dateOfBirth, set
                                                         label="Role"
                                                         id="role"
                                                         selectedValue={initialValues.role}
-                                                        options={[{ value: "User", display: "User" },
-                                                        { value: "Admin", display: "Admin" }]} onChange={handleCheckAll}
+                                                        options={[{ value: "User" },
+                                                        { value: "Admin" }]} onChange={handleCheckAll}
                                                     />
                                                 </div>
+
+                                                {location.pathname === '/updateuser' ?
+                                                    <div className="form-group col-md-4" style={{display: "flex",alignItems: "flex-end"}}>
+                                                        <div style={{ padding: '0 10px', display: "flex",alignItems: "center" }}>
+                                                            {/* <label>{props.label}</label> */}
+                                                            <label class="switch" style={{marginBottom:0}}>
+                                                                <input type="checkbox"
+                                                                    checked={status}
+                                                                    onChange={(event) => handleStatus(event)} />
+                                                                <span class="slider round"></span>
+                                                            </label>
+
+                                                            {status ? <label style={{ padding: '0 10px',marginBottom:0 }}> Active</label> : <label style={{ padding: '0 10px',marginBottom:0 }}>Inactive</label>}
+                                                        </div>
+                                                    </div> : <></>}
                                             </div>
                                         </div>
                                     </div>

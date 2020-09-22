@@ -39,7 +39,7 @@ const LoginPage = ({ handleLogin, isAuthenticated, openSnackbar }) => {
                             onBlur={(input) => setLoginDetails({ ...loginDetails, username: input.target.value })} />
                         {error === true && loginDetails.username.length === 0 ? <p >Username is required.</p> : <></>}
 
-                        <input type="text" id="password" placeholder="Password"
+                        <input type="password" id="password" placeholder="Password"
                             className="form-control" aria-describedby="emailHelp"
                             onBlur={(input) => setLoginDetails({ ...loginDetails, password: input.target.value })} />
 

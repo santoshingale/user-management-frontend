@@ -50,13 +50,13 @@ const NewUser = () => {
         const formData = new FormData();
         formData.append('register', new Blob([JSON.stringify(payload)],{type: "application/json"}))
         formData.append('profilePic', profilePic);
-        const resp = await apiService.postMultipart(path, formData)
+        await apiService.postMultipart(path, formData)
     }
     return (
         <>
             <UserForm permissions={permissions} setPermissions={setPermissions} initialValues={initialValues}
                 dateOfBirth={dateOfBirth} setDateOfBirth={setDateOfBirth} handleSubmit={handleSubmit}
-                profilePic={profilePic} setProfilePic={setProfilePic} setIsProfilePicChange={setIsProfilePicChange}/>
+                profilePic={profilePic} setProfilePic={setProfilePic} isProfilePicChange={isProfilePicChange} setIsProfilePicChange={setIsProfilePicChange}/>
         </>
     )
 }

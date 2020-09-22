@@ -1,13 +1,18 @@
 import axios from "axios";
 import { url } from "../config/env-config";
 import { authHeader, authHeaderMultiPart } from "./authService";
+import { logout } from "./authService";
+
 
 const promiseWithErrorHandling = (promise) => {
     return promise.catch((err) => {
         if (err.response && err.response.status === 500) {
-            window.location.assign("/error");
+            // window.location.assign("/error");
+        }
+        else if (err.response && err.response.status === 401) {
+            // logout()
         } else {
-            throw err;
+            // throw err;
         }
     });
 };

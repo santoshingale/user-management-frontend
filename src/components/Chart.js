@@ -107,9 +107,11 @@ function Chart({ casesType }) {
     }
 
     useEffect(() => {
+        let mounted = true;
+
         async function fetchStatus() {
 
-            const resp = await (await apiService.get("/home/dashboard/chart")).data.object
+            const resp = await (await apiService.get("home/dashboard/chart")).data.object
 
             await resp.forEach(function (obj) {
 
@@ -123,8 +125,7 @@ function Chart({ casesType }) {
                     var key3 = obj.country
                     _topLocation[key3] = (_topLocation[key3] || 0) + 1
 
-
-                    var key = moment(new Date()).format('YYYY') - moment(obj.dateOfBirth).format('YYYY')
+                    var key = moment(new Date(), 'YYYY').format('YYYY') - moment(obj.dateOfBirth).format('YYYY')
                     if (key <= 18) {
                         _ageGroup[0] = parseInt(_ageGroup[0]) + 1
                     }
@@ -149,13 +150,19 @@ function Chart({ casesType }) {
 
                 }
             })
-            setAgeGroup(_ageGroup)
-            setTopLocationData(_topLocation)
-            setTopLocation(Object.keys(_topLocation).sort(function (a, b) { return _topLocation[b] - _topLocation[a] }))
-            await setChartData(await bindChartData(_counter))
-            await setUserRationByGender(_userRatioByGender)
+            if (mounted) {
+                setAgeGroup(_ageGroup)
+                setTopLocationData(_topLocation)
+                setTopLocation(Object.keys(_topLocation).sort(function (a, b) { return _topLocation[b] - _topLocation[a] }))
+                await setChartData(await bindChartData(_counter))
+                await setUserRationByGender(_userRatioByGender)
+            }
         }
         fetchStatus();
+
+        return () => {
+            mounted = false;
+        }
     }, [chartTimeLime])
 
     return (

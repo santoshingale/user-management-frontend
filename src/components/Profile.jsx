@@ -3,7 +3,9 @@ import { useSelector } from 'react-redux'
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import { ReactComponent as Time } from '../assets/time.svg'
-import Moment from 'react-moment';
+import moment from 'moment'
+
+
 
 const Profile = () => {
     const user = useSelector(users => users.user)
@@ -80,11 +82,12 @@ const Profile = () => {
                                 <span style={{ fontStyle: 'italic' }}> <Time />  Login history is displayed prior to the last login </span>
                             </h3>
 
-                            {user?.lastLogin?.slice(0).reverse().map((loginHistory) => <h3>
-                                <span> {'>'} <Moment format="MMM DD YYYY h:mm:ss A">
-                                {loginHistory["loginTime"]}
-                                </Moment> </span>
-                            </h3>)}
+                            {user?.lastLogin?.slice(0).reverse().map((loginHistory,index) =>
+                                <h3 key={index}>
+                                    <span> {'>'}
+                                        {moment(loginHistory["loginTime"]).format('MMM DD YYYY h:mm:ss A')}
+                                    </span>
+                                </h3>)}
                         </div>}
                 </div>
             </div>

@@ -19,9 +19,9 @@ const FormikSelect = (props) => {
             {...otherProps}
             style={{ borderRadius: "1px", height: '35px' }}
             id={id}
+            defaultValue={selectedValue}
         >
-            {options.map((option) => (selectedValue === option.value) ?
-                <option  key={option.value} selected value={option.value}>{option.value}</option> :
+            {options.map((option) => 
                 <option key={option.value} value={option.value}>{option.value}</option>)}
         </select>
         </div>

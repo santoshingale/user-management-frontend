@@ -13,12 +13,15 @@ export default () => {
         async function fetchUserInfo() {
             if (isLoggedIn()) {
                 const userDetails = await apiService.get("home/user/info")
-                dispatch(addUser(userDetails.data.object))
+                dispatch(addUser(userDetails?.data?.object))
+                setIsAuthenticated(true)
             }
-            setIsAuthenticated(isLoggedIn());
+            else{
+                setIsAuthenticated(false);
+            }
         }
         fetchUserInfo();
-    }, [dispatch,isAuthenticated]);
+    }, [isAuthenticated]);
 
     const handleLogin = async (loginDetails) => {
         const { username, password, rememberMe } = loginDetails;

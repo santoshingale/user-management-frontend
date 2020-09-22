@@ -30,7 +30,7 @@ const Header = ({ showSidebar, sidebar, handleLogout }) => {
                     <ArrowCircle onClick={showSidebar} style={sidebar ? {} : { transform: 'rotateY(180deg)' }} />
                 </div>
                 <NavLink onClick={handleClick} className="header-link">
-                    <img src={`http://localhost:8080/home/user/image/${user?.profilePic}`} alt="header" />
+                    {user?.profilePic !== undefined ? <img src={`http://localhost:8080/home/user/image/${user?.profilePic}`} alt="header" /> : <></>}
                     {user?.firstname}
                 </NavLink>
                 <Popover
